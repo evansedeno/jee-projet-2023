@@ -12,6 +12,7 @@ import java.util.List;
 @Transactional
 public class DirectoryService {
 
+
     @Autowired
     private DirectoryDAO directoryDAO;
 
