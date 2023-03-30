@@ -19,40 +19,45 @@ public class DirectoryController {
 
     @RequestMapping("/")
     public String index() {
-
-        // Créez une nouvelle instance de Groupe
-        Groupe groupe1 = new Groupe();
-        groupe1.setNom("Groupe1");
-
-        directoryService.ajouterGroupe(groupe1);
-
-        // Créez une nouvelle instance de Person
-        Personne personne1 = new Personne();
-        personne1.setNom("Dupont");
-        personne1.setPrenom("Pierre");
-        personne1.setEmail("pierre.dupont@example.com");
-        personne1.setDateDeNaissance(new Date());
-        personne1.setSiteWeb("https://www.example.com");
-        personne1.setMotDePasse("1234");
-        personne1.setGroupe(groupe1);
-
-        // Ajoutez la personne en utilisant la méthode save() de l'objet DirectoryDAO
-        directoryService.ajouterPersonne(personne1);
-
-
-        // Créez une nouvelle instance de Person
-        Personne personne2 = new Personne();
-        personne2.setNom("Durand");
-        personne2.setPrenom("Paul");
-        personne2.setEmail("paul.durand@example.com");
-        personne2.setDateDeNaissance(new Date());
-        personne2.setSiteWeb("https://www.example2.com");
-        personne2.setMotDePasse("5678");
-        personne2.setGroupe(groupe1);
-
-        directoryService.ajouterPersonne(personne2);
-
         return "index";
+    }
+
+    @RequestMapping("/test")
+    public String test(Model model) {
+        // On créer un miller de personnes et une centaine de groupes
+        List<Personne> personnes = new ArrayList<>();
+        List<Groupe> groupes = new ArrayList<>();
+
+        // On créer 100 groupes avec des noms différents
+        for (int i = 0; i < 100; i++) {
+            Groupe groupe = new Groupe();
+            groupe.setNom("Groupe " + i);
+            groupes.add(groupe);
+        }
+        for (Groupe groupe : groupes) {
+            directoryService.ajouterGroupe(groupe);
+        }
+
+        // On créer 1000 personnes avec des noms différents
+        for (int i = 0; i < 1000; i++) {
+            Personne personne = new Personne();
+            personne.setNom("Nom " + i);
+            personne.setPrenom("Prenom " + i);
+            personne.setEmail("email" + i + "@gmail.com");
+            personne.setSiteWeb("www.site" + i + ".com");
+            personne.setDateDeNaissance(new Date());
+            // On récupère un groupe aléatoire
+            personne.setGroupe(groupes.get((int) (Math.random() * 100)));
+            personne.setMotDePasse("motdepasse" + i);
+            personnes.add(personne);
+        }
+        for (Personne personne : personnes) {
+            directoryService.ajouterPersonne(personne);
+        }
+
+        model.addAttribute("personnes", personnes);
+
+        return "test";
     }
 
     @RequestMapping("/groupes")

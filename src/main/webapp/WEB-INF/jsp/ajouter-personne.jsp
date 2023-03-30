@@ -1,14 +1,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html>
 <head>
     <title>Ajouter une personne</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/style.css">
 </head>
 <body>
 <jsp:include page="header.jsp"/>
@@ -33,7 +33,7 @@
         </tr>
         <tr>
             <td><form:label path="dateDeNaissance">Date de naissance:</form:label></td>
-            <td><form:input path="dateDeNaissance" type="date"/></td>
+            <td><form:input path="dateDeNaissance" type="date" /></td>
         </tr>
         <tr>
             <td><form:label path="groupe">Groupe:</form:label></td>

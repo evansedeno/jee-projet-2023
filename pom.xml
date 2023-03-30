@@ -35,37 +35,26 @@
         <!-- lookup parent from repository -->
     </parent>
 
-
     <dependencies>
         <!-- ===== Partie Web ===== -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>3.0.4</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
-            <version>3.0.4</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
-            <version>3.0.4</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-jasper</artifactId>
-            <version>10.1.7</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.2</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.taglibs</groupId>
@@ -77,56 +66,42 @@
             <artifactId>taglibs-standard-impl</artifactId>
             <version>1.2.5</version>
         </dependency>
-
-
         <!-- ===== pour utiliser Lombok ==== -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.26</version>
             <scope>provided</scope>
         </dependency>
-
-
         <!-- ===== Partie Test ===== -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <version>3.0.4</version>
             <scope>test</scope>
         </dependency>
-
-
         <!-- ===== Partie Data ===== -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-            <version>3.0.4</version>
         </dependency>
         <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
         </dependency>
-
-
         <!-- ===== Partie Validation des Javabeans ===== -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
-            <version>3.0.4</version>
         </dependency>
-
-
         <!-- ===== Import de bootstrap ===== -->
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>bootstrap</artifactId>
-            <version>5.2.3</version>
+            <version>4.6.0-1</version>
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>webjars-locator</artifactId>
-            <version>0.45</version>
+            <version>0.30</version>
         </dependency>
     </dependencies>
 </project>

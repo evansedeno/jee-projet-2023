@@ -1,11 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <meta charset="UTF-8">
 <html>
 <head>
   <title>Recherche de personne</title>
-  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/style.css">
 </head>
 <body>
 <jsp:include page="header.jsp"/>
@@ -28,6 +28,10 @@
       <li><a href="personne?id=${p.id}">${p.nom} ${p.prenom}</a></li>
     </c:forEach>
   </ul>
+</c:if>
+
+<c:if test="${empty personnes}">
+  <p>Aucune personne trouvée.</p>
 </c:if>
 <%@ include file="footer.jsp" %>
 </body>

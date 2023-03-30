@@ -1,5 +1,7 @@
 package mybootapp.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -14,6 +16,7 @@ public class Personne {
     private String prenom;
     private String email;
     private String siteWeb;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateDeNaissance;
     private String motdepasse;
     @ManyToOne
@@ -23,14 +26,14 @@ public class Personne {
     public Personne() {
     }
 
-    public Personne(String nom, String prenom, String email, String siteWeb, Date dateDeNaissance, Groupe groupe, String motdepasse) {
+    public Personne(String nom, String prenom, String email, String siteWeb, Date dateDeNaissance, Groupe groupe, String motDePasse) {
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.siteWeb = siteWeb;
         this.dateDeNaissance = dateDeNaissance;
         this.groupe = groupe;
-        this.motdepasse = motdepasse;
+        this.motdepasse = motDePasse;
     }
 
     public long getId() {
