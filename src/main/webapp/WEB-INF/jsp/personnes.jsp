@@ -16,7 +16,7 @@
     <ul>
         <c:forEach var="personne" items="${personnes}">
             <c:if test="${personne.groupe.id == groupe.id}">
-                <li><a href="personne?id=${personne.id}">${personne.nom} ${personne.prenom}</a></li>
+                <li><a href="personne/${personne.id}">${personne.nom} ${personne.prenom}</a></li>
             </c:if>
         </c:forEach>
     </ul>

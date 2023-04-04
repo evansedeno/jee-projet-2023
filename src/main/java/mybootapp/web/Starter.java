@@ -8,12 +8,23 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication(scanBasePackages = "mybootapp")
 @EntityScan(basePackages = "mybootapp.model")
 public class Starter extends SpringBootServletInitializer implements WebMvcConfigurer {
+
+	@Bean("messageSource")
+	public MessageSource messageSource() {
+		var r = new ReloadableResourceBundleMessageSource();
+		r.setBasenames("classpath:personne", "classpath:messages");
+		return r;
+	}
 
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {

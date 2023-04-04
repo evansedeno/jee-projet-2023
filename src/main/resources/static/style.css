@@ -10,23 +10,84 @@ body {
 }
 
 nav {
-    background-color: #222;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
-    padding: 1em;
-}
-
-nav a {
+    background-color: #333;
     color: #fff;
-    text-decoration: none;
-    margin-right: 1em;
-    font-size: 1.2em;
-    transition: opacity 0.2s;
+    font-size: 18px;
+    padding: 10px 20px;
 }
 
-nav a:hover {
-    opacity: 0.8;
+nav * {
+    margin: 0 10px;
+}
+
+a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropbtn {
+    background-color: inherit;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+}
+
+.fa-caret-down {
+    margin-left: 5px;
+}
+
+/* Responsive styles */
+
+@media screen and (max-width: 600px) {
+    nav {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .dropdown {
+        margin-top: 10px;
+    }
+
+    .dropdown-content {
+        position: static;
+        display: none;
+        margin-top: 10px;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
 }
 
 h1 {
@@ -141,4 +202,14 @@ footer {
     margin: 50px auto;
     padding: 20px;
     text-align: center;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.error {
+    color: red;
+    font-size: 0.8em;
+    margin-top: 5px;
 }

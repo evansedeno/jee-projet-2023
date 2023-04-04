@@ -7,8 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.*;
 
-import mybootapp.controller.DirectoryController;
-import mybootapp.controller.DirectoryService;
+import mybootapp.controller.MainController;
 import mybootapp.model.Groupe;
 import mybootapp.model.Personne;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,7 +38,7 @@ class DirectoryControllerTest {
 
 
     @InjectMocks
-    private DirectoryController directoryController;
+    private MainController directoryController;
 
     @BeforeEach
     public void setUp() {

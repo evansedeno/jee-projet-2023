@@ -11,7 +11,6 @@ public class Personne {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
     private String nom;
     private String prenom;
     private String email;
@@ -20,9 +19,11 @@ public class Personne {
     private Date dateDeNaissance;
     private String motdepasse;
     @ManyToOne
-    @JoinColumn(name="groupe_id")
+    @JoinColumn(name = "groupe_id")
     private Groupe groupe;
 
+
+    /* ----------------- CONSTRUCTEURS ----------------- */
     public Personne() {
     }
 
@@ -36,67 +37,73 @@ public class Personne {
         this.motdepasse = motDePasse;
     }
 
+
+    /* ----------------- GETTERS ----------------- */
+
     public long getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getNom() {
         return nom;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
     public String getPrenom() {
         return prenom;
-    }
-
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getSiteWeb() {
         return siteWeb;
-    }
-
-    public void setSiteWeb(String siteWeb) {
-        this.siteWeb = siteWeb;
-    }
-
-    public Date getDateDeNaissance() {
-        return dateDeNaissance;
-    }
-
-    public void setDateDeNaissance(Date dateNaissance) {
-        this.dateDeNaissance = dateNaissance;
     }
 
     public Groupe getGroupe() {
         return groupe;
     }
 
-    public void setGroupe(Groupe groupe) {
-        this.groupe = groupe;
-    }
-
     public String getMotDePasse() {
         return motdepasse;
     }
 
+    public Date getDateDeNaissance() {
+        return dateDeNaissance;
+    }
+
+
+    /* ----------------- SETTERS ----------------- */
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setSiteWeb(String siteWeb) {
+        this.siteWeb = siteWeb;
+    }
+
+    public void setGroupe(Groupe groupe) {
+        this.groupe = groupe;
+    }
+
     public void setMotDePasse(String motdepasse) {
         this.motdepasse = motdepasse;
+    }
+
+    public void setDateDeNaissance(Date dateNaissance) {
+        this.dateDeNaissance = dateNaissance;
     }
 }
