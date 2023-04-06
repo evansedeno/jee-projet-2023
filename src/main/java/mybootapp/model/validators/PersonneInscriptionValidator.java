@@ -1,5 +1,8 @@
-package mybootapp.model;
+package mybootapp.model.validators;
 
+import mybootapp.model.Groupe;
+import mybootapp.model.IDirectoryDAO;
+import mybootapp.model.Personne;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -10,7 +13,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 
 @Component
-public class PersonneValidator implements Validator {
+public class PersonneInscriptionValidator implements Validator {
 
     @Autowired
     private IDirectoryDAO directoryDAO;
@@ -62,7 +65,8 @@ public class PersonneValidator implements Validator {
 
         // Validation du site web
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "siteWeb", "siteWeb.vide");
-        if (personne.getSiteWeb().length() < 2) {
+
+        if (personne.getSiteWeb().length() < 5) {
             errors.rejectValue("siteWeb", "siteWeb.tropCourt");
         }
         if (personne.getSiteWeb().length() > 50) {
@@ -109,5 +113,6 @@ public class PersonneValidator implements Validator {
         if (personne.getMotDePasse().length() < 2) {
             errors.rejectValue("motDePasse", "motDePasse.tropCourt");
         }
+
     }
 }

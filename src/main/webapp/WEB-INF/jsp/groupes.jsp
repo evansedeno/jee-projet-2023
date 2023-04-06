@@ -12,7 +12,7 @@
 <ul>
     <c:forEach var="groupe" items="${groupes}" >
         <li>
-            <a href="groupe/${groupe.id}">${groupe.nom}</a>
+            <a href="${groupe.id}">${groupe.nom}</a>
         </li>
     </c:forEach>
 </ul>

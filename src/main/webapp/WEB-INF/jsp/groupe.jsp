@@ -12,7 +12,7 @@
 <ul>
     <c:forEach var="personne" items="${personnes}">
         <li>
-            <a href="${pageContext.request.contextPath}/personne?id=${String.valueOf(personne.id)}">${personne.nom} ${personne.prenom}</a>
+            <a href="${pageContext.request.contextPath}/personne/${String.valueOf(personne.id)}">${personne.nom} ${personne.prenom}</a>
         </li>
     </c:forEach>
 </ul>

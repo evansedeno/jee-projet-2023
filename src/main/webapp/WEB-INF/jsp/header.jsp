@@ -1,21 +1,28 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <nav>
-    <a href="/">Accueil</a>
     <div class="dropdown">
-        <button class="dropbtn">Groupe</button>
+        <a href="/" class="dropbtn">Accueil</a>
+    </div>
+    <div class="dropdown">
+        <div class="dropbtn">Groupes</div>
         <div class="dropdown-content">
-            <a href="groupe/ajouter">Ajouter un groupe</a>
-            <a href="groupe/supprimer">Supprimer un groupe</a>
-            <a href="groupe/modifier">Modifier un groupe</a>
-            <a href="groupe/recherche">Rechercher un groupe</a>
+            <a href="/groupe/liste">Liste</a>
+            <a href="/groupe/ajouter">Ajouter</a>
+            <a href="/groupe/recherche">Rechercher</a>
         </div>
     </div>
     <div class="dropdown">
-        <button class="dropbtn">Personne</button>
+        <div class="dropbtn">Personnes</div>
         <div class="dropdown-content">
-            <a href="personne/ajouter">Ajouter une personne</a>
-            <a href="personne/supprimer">Supprimer une personne</a>
-            <a href="personne/modifier">Modifier une personne</a>
-            <a href="personne/recherche">Rechercher une personne</a>
+            <a href="/personne/liste">Liste</a>
+            <a href="/personne/rechercher">Recherche</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <div class="dropbtn">Mon Compte</div>
+        <div class="dropdown-content">
+            <a href="/personne/${utilisateur.personne.id}/modifier">Modifier</a>
+            <a href="/deconnexion" class="dropbtn">Déconnexion</a>
         </div>
     </div>
 </nav>

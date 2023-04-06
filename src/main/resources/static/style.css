@@ -20,7 +20,7 @@ nav {
 }
 
 nav * {
-    margin: 0 10px;
+    margin: 0 3%;
 }
 
 a {
@@ -61,33 +61,11 @@ a {
     padding: 0;
     font: inherit;
     cursor: pointer;
+    white-space: nowrap;
 }
 
 .fa-caret-down {
     margin-left: 5px;
-}
-
-/* Responsive styles */
-
-@media screen and (max-width: 600px) {
-    nav {
-        flex-direction: column;
-        padding: 20px;
-    }
-
-    .dropdown {
-        margin-top: 10px;
-    }
-
-    .dropdown-content {
-        position: static;
-        display: none;
-        margin-top: 10px;
-    }
-
-    .dropdown:hover .dropdown-content {
-        display: block;
-    }
 }
 
 h1 {
@@ -133,8 +111,6 @@ form td {
 
 form input[type=text], input[type=email], input[type=number], input[type=url], input[type=date], form input[type=password], form select {
     border: none;
-    padding: 5px;
-    background-color: #222;
     color: #fff;
     margin: 0 0 15px;
     width: 250px;
@@ -212,4 +188,110 @@ footer {
     color: red;
     font-size: 0.8em;
     margin-top: 5px;
+}
+
+.boutons-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.boutons-login {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1.5rem;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    margin: 10px;
+    text-decoration: none;
+}
+
+.boutons-login:hover {
+    background-color: #555;
+}
+
+
+.container {
+    background-color: #222;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px #333;
+    max-width: 600px;
+    margin: 30px auto;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    text-align: left;
+    color: #fff;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid #fff;
+    border-radius: 5px;
+    color: #fff;
+    padding: 10px;
+    font-size: 14px;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #00bcd4;
+}
+
+.form-group .error {
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    font-size: 12px;
+    color: #f44336;
+}
+
+.signupbtn {
+    background-color: #00bcd4;
+    border: none;
+    color: #fff;
+    padding: 10px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    font-size: 16px;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.signupbtn:hover {
+    opacity: 0.8;
+}
+
+.deleteAccountBtn {
+    background-color: #f44336;
+    border: none;
+    color: #fff;
+    padding: 10px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    font-size: 16px;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.deleteAccountBtn:hover {
+    opacity: 0.8;
+}
+
+option {
+    color: #000;
 }

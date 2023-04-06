@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/style.css">
 </head>
 <body>
-<jsp:include page="header.jsp"/>
 <h1>INSCRIPTION</h1>
 <form:form action="inscription" method="post" modelAttribute="personne">
     <div class="container">
@@ -43,7 +42,7 @@
         <!-- Email -->
         <div class="form-group">
             <label for="email"><b>Email</b></label>
-            <form:input type="text" path="email" placeholder="Entrer votre email" class="form-control" required="true"/>
+            <form:input type="text" path="email" placeholder="Entrez votre email" class="form-control" required="true"/>
             <div>
                 <form:errors path="email" cssClass="error"/>
             </div>
@@ -74,7 +73,7 @@
         <!-- Mot de passe -->
         <div class="form-group">
             <label for="motDePasse"><b>Mot de passe</b></label>
-            <form:password path="motDePasse" placeholder="Entrer votre mot de passe" class="form-control"
+            <form:password path="motDePasse" placeholder="Entrez votre mot de passe" class="form-control"
                            required="true"/>
             <div>
                 <form:errors path="motDePasse" cssClass="error"/>
@@ -90,6 +89,5 @@
         </div>
     </c:if>
 </form:form>
-<%@ include file="footer.jsp" %>
 </body>
 </html>

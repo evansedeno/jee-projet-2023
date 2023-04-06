@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <!DOCTYPE html>
 <html>
@@ -12,7 +12,7 @@
 <body>
 <jsp:include page="header.jsp"/>
 <h1>Ajouter un groupe</h1>
-<form:form method="post" action="ajouter-groupe" commandName="groupe">
+<form:form method="post" action="ajouter" commandName="groupe">
     <table>
         <tr>
             <td><form:label path="nom">Nom:</form:label></td>
@@ -26,3 +26,6 @@
 <%@ include file="footer.jsp" %>
 </body>
 </html>
+
+
+

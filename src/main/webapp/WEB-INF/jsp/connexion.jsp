@@ -1,28 +1,42 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<html>
 <head>
     <title>Connexion</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/style.css">
 </head>
 <body>
-<jsp:include page="header.jsp"/>
 <h1>CONNEXION</h1>
-<form>
+<form:form action="connexion" method="post" modelAttribute="personne">
     <div class="container">
-        <label for="email"><b>Email</b>
-            <input type="email" placeholder="Entrez votre email" name="email" required></label>
 
-        <label for="motDePasse"><b>Mot de passe</b>
-            <input type="password" placeholder="Entrez votre mot de passe" name="motDePasse" required></label>
+        <!-- Email -->
+        <div class="form-group">
+            <label for="email"><b>Email</b></label>
+            <form:input type="text" path="email" placeholder="Entrer votre email" class="form-control" required="true"/>
+            <div>
+                <form:errors path="email" cssClass="error"/>
+            </div>
+        </div>
 
-        <button type="submit">Connexion</button>
+        <!-- Mot de passe -->
+        <div class="form-group">
+            <label for="motDePasse"><b>Mot de passe</b></label>
+            <form:password path="motDePasse" placeholder="Entrer votre mot de passe" class="form-control"
+                           required="true"/>
+            <div>
+                <form:errors path="motDePasse" cssClass="error"/>
+            </div>
+        </div>
+
+        <button type="submit" class="signupbtn">Connexion</button>
     </div>
 
-    <div class="container">
-        <p class="motdepasseoublie">Mot de passe <a href="#">oublié?</a></p>
-    </div>
-
-</form>
-<%@ include file="footer.jsp" %>
+    <c:if test="${not empty errorMessage}">
+        <div class="error-message">
+            <p>${errorMessage}</p>
+        </div>
+    </c:if>
+</form:form>
 </body>
 </html>

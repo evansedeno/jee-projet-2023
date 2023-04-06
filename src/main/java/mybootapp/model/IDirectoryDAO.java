@@ -31,7 +31,8 @@ public interface IDirectoryDAO {
     public Personne rechercherPersonneParEmail(String email);
     public List<Personne> rechercherPersonnesParPrenom(String prenom);
     public List<Personne> rechercherPersonnesParSiteWeb(String siteWeb);
-    public boolean authentifier(String email, String password);
+    List<Personne> rechercherPersonnesParNomEtPrenom(String nom, String prenom);
+    Personne authentifier(String email, String password);
 
     // Ajouts
     public void ajouterPersonne(Personne personne);

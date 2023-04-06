@@ -3,6 +3,7 @@ package mybootapp.model;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
@@ -82,10 +83,23 @@ public class EntityManagerDirectoryDAO implements IDirectoryDAO {
                 .setParameter("siteWeb", siteWeb).getResultList();
     }
 
-    public boolean authentifier(String email, String password) {
-        Personne personne = entityManager.createQuery("SELECT p FROM Personne p WHERE p.email = :email", Personne.class)
-                .setParameter("email", email).getSingleResult();
-        return personne != null && personne.getMotDePasse().equals(password);
+    public List<Personne> rechercherPersonnesParNomEtPrenom(String nom, String prenom) {
+        return entityManager.createQuery("SELECT p FROM Personne p WHERE LOWER(p.nom) LIKE LOWER(:nom) AND LOWER(p.prenom) LIKE LOWER(:prenom)", Personne.class)
+                .setParameter("nom", "%" + nom.toLowerCase() + "%")
+                .setParameter("prenom", "%" + prenom.toLowerCase() + "%")
+                .getResultList();
+    }
+
+    public Personne authentifier(String email, String password) {
+        Personne personne = null;
+        try {
+            personne = entityManager.createQuery("SELECT p FROM Personne p WHERE p.email = :email AND p.motdepasse = :password", Personne.class)
+                    .setParameter("email", email)
+                    .setParameter("password", password)
+                    .getSingleResult();
+        } catch (NoResultException ignored) {
+        }
+        return personne;
     }
 
     // Ajouts
