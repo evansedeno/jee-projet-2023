@@ -2,10 +2,13 @@ package mybootapp.web;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import mybootapp.model.IDirectoryDAO;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.*;
+
 
 import mybootapp.controller.MainController;
 import mybootapp.model.Groupe;
@@ -31,7 +34,7 @@ import java.util.List;
 class DirectoryControllerTest {
 
     @Mock
-    private DirectoryService directoryService;
+    private IDirectoryDAO directoryDAO;
 
     @Autowired
     private MockMvc mockMvc;
@@ -47,14 +50,55 @@ class DirectoryControllerTest {
 
 
     @Test
-    public void testIndex() throws Exception {
+    public void testIndex() throws Exception{
         mockMvc.perform(MockMvcRequestBuilders.get("/"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("index"));
     }
 
+
+
     @Test
-    public void TestcreatePersonne() {
+    public void TestControllerInscriptionFormulaire() throws Exception{
+        mockMvc.perform(MockMvcRequestBuilders.get("/inscription"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("connexion"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("groupes"));
+    }
+    
+    @Test
+    public  void TestInscription() throws Exception{
+        Groupe groupe = new Groupe();
+        groupe.setNom("La bande à Picsou");
+        groupe.setId(1);
+        Personne personne = new Personne();
+        personne.setNom("Picsou");
+        personne.setPrenom("Balthazar");
+        personne.setEmail("Balthazar.Picsou@donaldville.com");
+        personne.setDateDeNaissance(new Date());
+        personne.setSiteWeb("baltpcs.com");
+        personne.setMotDePasse("Sou Fetiche");
+        personne.setGroupe(groupe);
+        Mockito.verify(directoryDAO, Mockito.times(1)).ajouterPersonne(personne);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/inscription")
+                        .param("nom", "Picsou")
+                        .param("prenom", "Balthazar")
+                        .param("email", "Balthazar.Picsou@donaldville.com")
+                        .param("dateDeNaissance", "01-01-1900")
+                        .param("siteWeb", "baltpcs.com")
+                        .param("motDePasse", "Sou Fetiche")
+                        .param("groupe.nom", "1"))
+                        .andExpect(MockMvcResultMatchers.status().isOk())
+                        .andExpect(MockMvcResultMatchers.view().name("inscription"))
+                        .andExpect(MockMvcResultMatchers.model().attributeExists("errorMessage"));
+        Mockito.verify(directoryDAO, Mockito.never()).ajouterPersonne(Mockito.any(Personne.class));
+
+    }
+
+
+    @Test
+    public void TestcreatePersonne(){
         Groupe groupe = new Groupe();
         Date dateNaissance = new Date(0);
         Personne p = new Personne("John", "Cena", "John.Cena@wwf.com", "johnflex.io", dateNaissance, groupe, "toto");
@@ -69,84 +113,102 @@ class DirectoryControllerTest {
 
 
     @Test
-    public void testTrouverGroupeParId() {
-        DirectoryService directoryService = Mockito.mock(DirectoryService.class);
+    public void testTrouverGroupeParId(){
+        IDirectoryDAO directoryService = Mockito.mock(IDirectoryDAO.class);
 
         Groupe groupe = new Groupe("Groupe 1");
         directoryService.ajouterGroupe(groupe);
-        when(directoryService.trouverGroupeParId(1)).thenReturn(groupe);
+        when(directoryService.rechercherGroupeParId(1)).thenReturn(groupe);
 
-        Groupe result = directoryService.trouverGroupeParId(1);
+        Groupe result = directoryService.rechercherGroupeParId(1);
         Assertions.assertEquals("Groupe 1", result.getNom());
     }
 
     @Test
-    public void testTrouverPersonnesParGroupe() {
+    public void testTrouverPersonnesParGroupe(){
         Groupe groupe = new Groupe();
         groupe.setId(1);
-        when(directoryService.trouverPersonnesParGroupe(groupe)).thenReturn(Arrays.asList(new Personne(), new Personne()));
+        when(directoryDAO.rechercherPersonnesParGroupe(groupe)).thenReturn(Arrays.asList(new Personne(), new Personne()));
 
-        List<Personne> result = directoryService.trouverPersonnesParGroupe(groupe);
+        List<Personne> result = directoryDAO.rechercherPersonnesParGroupe(groupe);
 
         Assertions.assertEquals(2, result.size());
     }
 
 
     @Test
-    public void testTrouverPersonneParId() {
+    public void testTrouverPersonneParId(){
         Personne personne = new Personne();
         personne.setId(1);
-        when(directoryService.trouverPersonneParId(1)).thenReturn(personne);
+        when(directoryDAO.rechercherPersonneParId(1)).thenReturn(personne);
 
-        Personne result = directoryService.trouverPersonneParId(1);
+        Personne result = directoryDAO.rechercherPersonneParId(1);
 
         Assertions.assertEquals(1, result.getId());
     }
 
     @Test
-    public void testRechercherPersonnesParNom() {
+    public void testRechercherPersonnesParNom(){
         String nom = "Macron";
-        when(directoryService.rechercherPersonnesParNom(nom)).thenReturn(Arrays.asList(new Personne(), new Personne()));
+        when(directoryDAO.rechercherPersonnesParNom(nom)).thenReturn(Arrays.asList(new Personne(), new Personne()));
 
-        List<Personne> result = directoryService.rechercherPersonnesParNom(nom);
+        List<Personne> result = directoryDAO.rechercherPersonnesParNom(nom);
 
         Assertions.assertEquals(2, result.size());
     }
 
 
     @Test
-    public void testRechercherPersonnesParPrenom() {
+    public void testRechercherPersonnesParPrenom(){
         String prenom = "Manu";
-        when(directoryService.rechercherPersonnesParPrenom(prenom)).thenReturn(Arrays.asList(new Personne(), new Personne()));
+        when(directoryDAO.rechercherPersonnesParPrenom(prenom)).thenReturn(Arrays.asList(new Personne(), new Personne()));
 
-        List<Personne> result = directoryService.rechercherPersonnesParPrenom(prenom);
+        List<Personne> result = directoryDAO.rechercherPersonnesParPrenom(prenom);
 
         Assertions.assertEquals(2, result.size());
     }
 
     @Test
-    public void testRechercherPersonnesParSiteWeb() {
+    public void testRechercherPersonnesParSiteWeb(){
         String website = "www.49,3.com";
-        when(directoryService.rechercherPersonnesParSiteWeb(website)).thenReturn(Arrays.asList(new Personne(), new Personne()));
+        when(directoryDAO.rechercherPersonnesParSiteWeb(website)).thenReturn(Arrays.asList(new Personne(), new Personne()));
 
-        List<Personne> result = directoryService.rechercherPersonnesParSiteWeb(website);
+        List<Personne> result = directoryDAO.rechercherPersonnesParSiteWeb(website);
 
         Assertions.assertEquals(2, result.size());
     }
 
     @Test
-    public void testAjouterPersonne() {
+    public void testAjouterPersonne(){
         Personne personne = new Personne();
-        directoryService.ajouterPersonne(personne);
-        verify(directoryService, times(1)).ajouterPersonne(personne);
+        directoryDAO.ajouterPersonne(personne);
+        verify(directoryDAO, times(1)).ajouterPersonne(personne);
     }
 
     @Test
-    public void testAjouterGroupe() {
+    public void testAjouterGroupe(){
         Groupe groupe = new Groupe();
-        directoryService.ajouterGroupe(groupe);
-        verify(directoryService, times(1)).ajouterGroupe(groupe);
+        directoryDAO.ajouterGroupe(groupe);
+        verify(directoryDAO, times(1)).ajouterGroupe(groupe);
     }
+
+
+    @Test
+    public void testCreateGroupeModelAttribute() throws Exception{
+        mockMvc.perform(MockMvcRequestBuilders.get("/"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.model().attributeExists("command"))
+                .andExpect(MockMvcResultMatchers.model().attribute("command", Matchers.instanceOf(Groupe.class)));
+    }
+
+    @Test
+    public void testAfficherFormulaireAjoutGroupe() throws Exception{
+        mockMvc.perform(MockMvcRequestBuilders.get("/ajouter-groupe"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("ajouter-groupes"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("groupe"));
+    }
+
 
 
 }
