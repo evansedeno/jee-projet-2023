@@ -21,8 +21,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Optional;
 
 @SpringBootTest
 @ContextConfiguration(classes = Starter.class)
@@ -267,18 +274,200 @@ public class PersonneValidatorTest {
     }
 
     @Test
-    public void testEmailTropCourt() {
+    public void testSiteWebVide() {
         Personne personne = new Personne();
         personne.setNom("Dupont");
         personne.setPrenom("Alice");
-        personne.setEmail("a@b.f");
+        personne.setSiteWeb("");
+        personne.setEmail("Alice@gmail.com");
+        personne.setMotDePasse("password");
+        personne.setDateDeNaissance(new Date());
+        Errors errors = new BindException(personne, "personne");
+        personneValidator.validate(personne, errors);
+        Assertions.assertTrue(errors.hasErrors());
+        Assertions.assertTrue(errors.hasFieldErrors("siteWeb"));
+        Assertions.assertEquals("siteWeb.vide", errors.getFieldError("siteWeb").getCode());
+    }
+
+    @Test
+    public void testSiteWebTropCourt() {
+        Personne personne = new Personne();
+        personne.setNom("Dupont");
+        personne.setPrenom("Alice");
+        personne.setSiteWeb("a");
+        personne.setEmail("Alice@gmail.com");
+        personne.setMotDePasse("password");
+        personne.setDateDeNaissance(new Date());
+        Errors errors = new BindException(personne, "personne");
+        personneValidator.validate(personne, errors);
+        Assertions.assertTrue(errors.hasErrors());
+        Assertions.assertTrue(errors.hasFieldErrors("siteWeb"));
+        Assertions.assertEquals("siteWeb.tropCourt", errors.getFieldError("siteWeb").getCode());
+    }
+
+    @Test
+    public void testSiteWebTropLong() {
+        Personne personne = new Personne();
+        personne.setNom("Dupont");
+        personne.setPrenom("Alice");
+        personne.setSiteWeb("https://www.example.com/" + "a".repeat(46));
+        personne.setEmail("Alice@gmail.com");
+        personne.setMotDePasse("password");
+        personne.setDateDeNaissance(new Date());
+        Errors errors = new BindException(personne, "personne");
+        personneValidator.validate(personne, errors);
+        Assertions.assertTrue(errors.hasErrors());
+        Assertions.assertTrue(errors.hasFieldErrors("siteWeb"));
+        Assertions.assertEquals("siteWeb.tropLong", errors.getFieldError("siteWeb").getCode());
+    }
+
+    @Test
+    public void testSiteWebAvecEspace() {
+        Personne personne = new Personne();
+        personne.setNom("Dupont");
+        personne.setPrenom("Alice");
+        personne.setSiteWeb("https://www.example. com");
+        personne.setEmail("Alice@gmail.com");
+        personne.setMotDePasse("password");
+        personne.setDateDeNaissance(new Date());
+        Errors errors = new BindException(personne, "personne");
+        personneValidator.validate(personne, errors);
+        Assertions.assertTrue(errors.hasErrors());
+        Assertions.assertTrue(errors.hasFieldErrors("siteWeb"));
+        Assertions.assertEquals("siteWeb.espace", errors.getFieldError("siteWeb").getCode());
+    }
+
+    @Test
+    public void testSiteWebFormatInvalide() {
+        Personne personne = new Personne();
+        personne.setNom("Dupont");
+        personne.setPrenom("Alice");
+        personne.setSiteWeb("feizofh");
+        personne.setEmail("Alice@gmail.com");
+        personne.setMotDePasse("password");
+        personne.setDateDeNaissance(new Date());
+        Errors errors = new BindException(personne, "personne");
+        personneValidator.validate(personne, errors);
+        Assertions.assertTrue(errors.hasErrors());
+        Assertions.assertTrue(errors.hasFieldErrors("siteWeb"));
+        Assertions.assertEquals("siteWeb.format", errors.getFieldError("siteWeb").getCode());
+    }
+
+    @Test
+    public void testEmailVide() {
+        Personne personne = new Personne();
+        personne.setNom("Dupont");
+        personne.setPrenom("Alice");
+        personne.setSiteWeb("feizofh");
+        personne.setEmail("");
+        personne.setMotDePasse("password");
+        personne.setDateDeNaissance(new Date());
         Errors errors = new BindException(personne, "personne");
         personneValidator.validate(personne, errors);
         Assertions.assertTrue(errors.hasErrors());
         Assertions.assertTrue(errors.hasFieldErrors("email"));
-        if (errors.getFieldError("email") != null) {
-            Assertions.assertEquals("email.tropCourt", errors.getFieldError("email").getCode());
-        }
+        Assertions.assertEquals("email.vide", errors.getFieldError("email").getCode());
+    }
+
+    @Test
+    public void testEmailTropCourt() {
+        Personne personne = new Personne();
+        personne.setNom("Dupont");
+        personne.setPrenom("Alice");
+        personne.setSiteWeb("feizofh");
+        personne.setEmail("a");
+        personne.setMotDePasse("password");
+        personne.setDateDeNaissance(new Date());
+        Errors errors = new BindException(personne, "personne");
+        personneValidator.validate(personne, errors);
+        Assertions.assertTrue(errors.hasErrors());
+        Assertions.assertTrue(errors.hasFieldErrors("email"));
+        Assertions.assertEquals("email.tropCourt", errors.getFieldError("email").getCode());
+    }
+
+    @Test
+    public void testEmailTropLong() {
+        Personne personne = new Personne();   personne.setNom("Dupont");
+        personne.setPrenom("Alice");
+        personne.setSiteWeb("feizofh");
+        personne.setEmail("avefzukfgzuyfegeyfgzeufgefyuzagefiuezfgy@dfybgefgozeofygzeyofu.com");
+        personne.setMotDePasse("password");
+        personne.setDateDeNaissance(new Date());
+        Errors errors = new BindException(personne, "personne");
+        personneValidator.validate(personne, errors);
+        Assertions.assertTrue(errors.hasErrors());
+        Assertions.assertTrue(errors.hasFieldErrors("email"));
+        Assertions.assertEquals("email.tropLong", errors.getFieldError("email").getCode());
+    }
+
+
+    @Test
+    public void testEmailFormatIncorrect() {
+        Personne personne = new Personne();
+        personne.setNom("Dupont");
+        personne.setPrenom("Alice");
+        personne.setSiteWeb("feizofh");
+        personne.setEmail("befyugyefgu");
+        personne.setMotDePasse("password");
+        personne.setDateDeNaissance(new Date());
+        Errors errors = new BindException(personne, "personne");
+        personneValidator.validate(personne, errors);
+        Assertions.assertTrue(errors.hasErrors());
+        Assertions.assertTrue(errors.hasFieldErrors("email"));
+        Assertions.assertEquals("email.format", errors.getFieldError("email").getCode());
+    }
+
+    @Test
+    public void testGroupeVide() {
+        Personne personne = new Personne();
+        personne.setNom("Dupont");
+        personne.setPrenom("Alice");
+        personne.setSiteWeb("feizofh");
+        personne.setEmail("befyugyefgu");
+        personne.setMotDePasse("password");
+        personne.setDateDeNaissance(new Date());
+        Errors errors = new BindException(personne, "personne");
+        personneValidator.validate(personne, errors);
+        Assertions.assertTrue(errors.hasErrors());
+        Assertions.assertTrue(errors.hasFieldErrors("groupe"));
+        Assertions.assertEquals("personne.groupe.vide", errors.getFieldError("groupe").getCode());
+    }
+
+    @Test
+    public void testGroupeInexistant() {
+        Personne personne = new Personne();
+        personne.setNom("Dupont");
+        personne.setPrenom("Alice");
+        personne.setSiteWeb("feizofh");
+        personne.setEmail("befyugyefgu");
+        personne.setMotDePasse("password");
+        personne.setDateDeNaissance(new Date());
+        Groupe groupe = new Groupe();
+        groupe.setId(999);
+        personne.setGroupe(groupe);
+        Errors errors = new BindException(personne, "personne");
+        personneValidator.validate(personne, errors);
+        Assertions.assertTrue(errors.hasErrors());
+        Assertions.assertTrue(errors.hasFieldErrors("groupe"));
+        Assertions.assertEquals("personne.groupe.existePas", errors.getFieldError("groupe").getCode());
+    }
+    
+    @Test
+    void testDateDeNaissanceInvalide() {
+        Personne personne = new Personne();
+        personne.setNom("Dupont");
+        personne.setPrenom("Alice");
+        personne.setSiteWeb("feizofh");
+        personne.setEmail("befyugyefgu");
+        personne.setMotDePasse("password");
+        personne.setDateDeNaissance(Date.from(LocalDate.of(2025, 1, 1).atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        Errors errors = new BeanPropertyBindingResult(personne, "personne");
+        personneValidator.validate(personne, errors);
+        Assertions.assertTrue(errors.hasErrors());
+        Assertions.assertEquals("personne.dateDeNaissance.invalide", errors.getFieldError("dateDeNaissance").getCode());
     }
 
 }
+
+
+
