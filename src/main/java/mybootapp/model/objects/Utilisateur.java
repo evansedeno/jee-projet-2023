@@ -1,4 +1,4 @@
-package mybootapp.model;
+package mybootapp.model.objects;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;

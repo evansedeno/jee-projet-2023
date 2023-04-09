@@ -1,6 +1,10 @@
 package mybootapp.controller;
 
 import mybootapp.model.*;
+import mybootapp.model.objects.Groupe;
+import mybootapp.model.objects.Personne;
+import mybootapp.model.objects.Recherche;
+import mybootapp.model.objects.Utilisateur;
 import mybootapp.model.validators.GroupeValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -45,9 +49,6 @@ public class GroupeController {
 
     @RequestMapping("/liste")
     public String listerGroupes(Model model) {
-        if (utilisateur.getPersonne() == null) {
-            return "redirect:/";
-        }
         List<Groupe> groupes = directoryDAO.rechercherTousLesGroupes();
         model.addAttribute("groupes", groupes);
         model.addAttribute("utilisateur", utilisateur);
@@ -56,9 +57,6 @@ public class GroupeController {
 
     @RequestMapping("/{id}")
     public String afficherGroupe(@PathVariable("id") long id, Model model) {
-        if (utilisateur.getPersonne() == null) {
-            return "redirect:/";
-        }
         if (id < 0) {
             return "redirect:/liste";
         }
@@ -94,20 +92,5 @@ public class GroupeController {
             model.addAttribute("utilisateur", utilisateur);
             return "redirect:liste";
         }
-    }
-
-    @RequestMapping("/rechercher")
-    public String rechercherGroupe(@RequestParam(value = "identifiant", required = false) String id,
-                                   @RequestParam(value = "nom", required = false) String nom,
-                                   Model model) {
-        if (utilisateur.getPersonne() == null) {
-            return "redirect:/";
-        }
-        List<Groupe> groupes = new ArrayList<>();
-        Recherche recherche = new Recherche();
-        recherche.rechercherGroupes(id, nom);
-        model.addAttribute("groupes", groupes);
-        model.addAttribute("utilisateur", utilisateur);
-        return "rechercher";
     }
 }

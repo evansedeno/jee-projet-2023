@@ -1,5 +1,8 @@
 package mybootapp.model;
 
+import mybootapp.model.objects.Groupe;
+import mybootapp.model.objects.Personne;
+
 import java.util.List;
 
 public interface IDirectoryDAO {

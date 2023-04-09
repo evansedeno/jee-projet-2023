@@ -1,6 +1,6 @@
 package mybootapp.web;
 import mybootapp.model.IDirectoryDAO;
-import mybootapp.model.Personne;
+import mybootapp.model.objects.Personne;
 import mybootapp.model.validators.PersonneConnexionValidator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,9 +11,6 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
-
-import static org.mockito.Mockito.when;
-import static org.junit.jupiter.api.Assertions.*;
 
 public class PersonneConnexionValidatorTest {
 

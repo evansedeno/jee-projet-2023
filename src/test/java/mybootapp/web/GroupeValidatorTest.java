@@ -9,10 +9,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.validation.BeanPropertyBindingResult;
 
 import mybootapp.controller.MainController;
-import mybootapp.model.Groupe;
+import mybootapp.model.objects.Groupe;
 import mybootapp.model.validators.GroupeValidator;
 import mybootapp.model.IDirectoryDAO;
-import mybootapp.model.Personne;
+import mybootapp.model.objects.Personne;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;

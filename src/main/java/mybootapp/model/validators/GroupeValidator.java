@@ -1,6 +1,6 @@
 package mybootapp.model.validators;
 
-import mybootapp.model.Groupe;
+import mybootapp.model.objects.Groupe;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;

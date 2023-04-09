@@ -1,5 +1,7 @@
 package mybootapp.model;
 
+import mybootapp.model.objects.Groupe;
+import mybootapp.model.objects.Personne;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -69,6 +71,10 @@ public class EntityManagerDirectoryDAO implements IDirectoryDAO {
     }
 
     public Personne rechercherPersonneParEmail(String email) {
+        List<Personne> personnes = rechercherToutesLesPersonnes();
+        if (personnes.isEmpty()) {
+            return null;
+        }
         return entityManager.createQuery("SELECT p FROM Personne p WHERE p.email = :email", Personne.class)
                 .setParameter("email", email).getSingleResult();
     }

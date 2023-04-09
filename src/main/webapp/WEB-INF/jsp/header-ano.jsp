@@ -33,7 +33,6 @@
                     </a>
                     <div class="dropdown-menu bg-dark" aria-labelledby="groupesDropdown">
                         <a href="/groupe/liste" class="dropdown-item">Liste</a>
-                        <a href="/groupe/ajouter" class="dropdown-item">Ajouter</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -54,8 +53,8 @@
                         <i class="fas fa-user-circle"></i> Mon Compte
                     </a>
                     <div class="dropdown-menu bg-dark" aria-labelledby="compteDropdown">
-                        <a href="/personne/${utilisateur.personne.id}/modifier" class="dropdown-item">Modifier</a>
-                        <a href="/deconnexion" class="dropdown-item">Déconnexion</a>
+                        <a href="/connexion" class="dropdown-item">Connexion</a>
+                        <a href="/inscription" class="dropdown-item">Inscription</a>
                     </div>
                 </li>
             </ul>

@@ -1,9 +1,13 @@
 package mybootapp.controller;
 
 import mybootapp.model.*;
-import mybootapp.model.validators.PersonneInscriptionValidator;
+import mybootapp.model.objects.Groupe;
+import mybootapp.model.objects.Personne;
+import mybootapp.model.objects.Recherche;
+import mybootapp.model.objects.Utilisateur;
 import mybootapp.model.validators.PersonneModificationMotDePasseValidator;
 import mybootapp.model.validators.PersonneModificationValidator;
+import mybootapp.model.validators.RechercheValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +33,9 @@ public class PersonneController {
 
     @Autowired
     PersonneModificationMotDePasseValidator personneModificationMotDePasseValidator;
+
+    @Autowired
+    RechercheValidator rechercheValidator;
 
     @ModelAttribute("command")
     public Personne createPersonne() {
@@ -59,9 +66,6 @@ public class PersonneController {
 
     @RequestMapping("/liste")
     public String listerPersonnes(Model model) {
-        if (utilisateur.getPersonne() == null) {
-            return "redirect:/";
-        }
         List<Personne> personnes = directoryDAO.rechercherToutesLesPersonnes();
         List<Groupe> groupes = directoryDAO.rechercherTousLesGroupes();
         model.addAttribute("personnes", personnes);
@@ -72,10 +76,10 @@ public class PersonneController {
 
     @RequestMapping("/{id}")
     public String afficherPersonne(@PathVariable("id") long id, Model model) {
-        if (utilisateur.getPersonne() == null) {
-            return "redirect:/";
-        }
         Personne personne = directoryDAO.rechercherPersonneParId(id);
+        if (personne == null) {
+            return "redirect:/personne/liste";
+        }
         model.addAttribute("personne", personne);
         model.addAttribute("utilisateur", utilisateur);
         return "personne";
@@ -103,6 +107,8 @@ public class PersonneController {
         Groupe groupe = directoryDAO.rechercherGroupeParId(groupe_id);
         personne.setGroupe(groupe);
         personneModificationValidator.validate(personne, result);
+        List<Groupe> groupes = directoryDAO.rechercherTousLesGroupes();
+        model.addAttribute("groupes", groupes);
         model.addAttribute("utilisateur", utilisateur);
         if (result.hasErrors()) {
             return "modifier-personne";
@@ -139,7 +145,7 @@ public class PersonneController {
         return "redirect:/personne/liste";
     }
 
-    @GetMapping("/{id}/supprimer")
+    @PostMapping("/{id}/supprimer")
     public String supprimerPersonne(@PathVariable("id") long id) {
         if (utilisateur.getPersonne() == null || utilisateur.getPersonne().getId() != id) {
             return "redirect:/";
@@ -150,20 +156,35 @@ public class PersonneController {
         return "redirect:/";
     }
 
-    @RequestMapping("/rechercher")
-    public String rechercherPersonnes(
-            @RequestParam(value = "identifiant", required = false) String id,
-            @RequestParam(value = "nom", required = false) String nom,
-            @RequestParam(value = "prenom", required = false) String prenom,
-            @RequestParam(value = "siteWeb", required = false) String siteWeb,
-            Model model) {
-        if (utilisateur.getPersonne() == null) {
-            return "redirect:/";
-        }
-        Recherche recherche = new Recherche();
-        List<Personne> personnes = recherche.rechercherPersonne(id, nom, prenom, siteWeb);
-        model.addAttribute("personnes", personnes);
+    @GetMapping("/rechercher")
+    public String rechercherPersonnes(Model model) {
+        List<Groupe> groupes = directoryDAO.rechercherTousLesGroupes();
+        model.addAttribute("groupes", groupes);
         model.addAttribute("utilisateur", utilisateur);
-        return "recherche";
+        return "rechercher";
     }
+
+    @PostMapping("/rechercher")
+    public String rechercherPersonnes(
+            @ModelAttribute("recherche") Recherche recherche,
+            BindingResult result,
+            Model model) {
+        rechercheValidator.validate(recherche, result);
+        model.addAttribute("utilisateur", utilisateur);
+        if (result.hasErrors()) {
+            return "rechercher";
+        }
+        Recherche r = new Recherche(recherche.getId(),
+                recherche.getNom(),
+                recherche.getPrenom(),
+                recherche.getSiteWeb(),
+                recherche.getGroupe(),
+                directoryDAO);
+        List<Personne> lp = r.rechercherPersonnes();
+        List<Groupe> groupes = directoryDAO.rechercherTousLesGroupes();
+        model.addAttribute("groupes", groupes);
+        model.addAttribute("personnes", lp);
+        return "rechercher";
+    }
+
 }

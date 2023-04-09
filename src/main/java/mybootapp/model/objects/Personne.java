@@ -1,4 +1,4 @@
-package mybootapp.model;
+package mybootapp.model.objects;
 
 import org.springframework.format.annotation.DateTimeFormat;
 

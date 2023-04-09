@@ -11,8 +11,8 @@ import static org.mockito.Mockito.*;
 
 
 import mybootapp.controller.MainController;
-import mybootapp.model.Groupe;
-import mybootapp.model.Personne;
+import mybootapp.model.objects.Groupe;
+import mybootapp.model.objects.Personne;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

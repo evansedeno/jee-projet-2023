@@ -1,8 +1,8 @@
 package mybootapp.model.validators;
 
-import mybootapp.model.Groupe;
+import mybootapp.model.objects.Groupe;
 import mybootapp.model.IDirectoryDAO;
-import mybootapp.model.Personne;
+import mybootapp.model.objects.Personne;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
