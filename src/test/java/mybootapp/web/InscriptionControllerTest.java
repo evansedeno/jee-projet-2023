@@ -48,14 +48,11 @@ class InscriptionControllerTest {
 
     @Test
     public void testInscriptionFormulaire() throws Exception {
-        // Given
         List<Groupe> groupes = new ArrayList<>();
         groupes.add(new Groupe("Groupe 1"));
         groupes.add(new Groupe( "Groupe 2"));
         when(utilisateurMock.getPersonne()).thenReturn(null);
         when(directoryDAOMock.rechercherTousLesGroupes()).thenReturn(groupes);
-
-        // When & Then
         mockMvc.perform(MockMvcRequestBuilders.get("/inscriptions"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("inscription"))
