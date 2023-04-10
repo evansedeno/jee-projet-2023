@@ -66,6 +66,12 @@
             <artifactId>taglibs-standard-impl</artifactId>
             <version>1.2.5</version>
         </dependency>
+
+        <!-- ===== Partie Mail ===== -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
         <!-- ===== pour utiliser Lombok ==== -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -102,6 +108,13 @@
             <groupId>org.webjars</groupId>
             <artifactId>webjars-locator</artifactId>
             <version>0.30</version>
+        </dependency>
+
+        <!-- ===== Partie Sécurité ===== -->
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.4</version>
         </dependency>
     </dependencies>
 </project>

@@ -1,21 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <link rel="stylesheet" href="/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
-<style>
-    .dropdown-item {
-        color: #fff;
-    }
-
-    .dropdown-item:hover {
-        color: #000;
-        background-color: #fff;
-    }
-
-    .navbar-dark {
-        background-color: #343a40;
-    }
-</style>
+<link rel="stylesheet" href="/css/header.css">
 <script src="/js/jquery-3.6.4.min.js"></script>
+<script>
+    $(function () {
+        $(".nav-item.dropdown").hover(
+            function () {
+                $(this).find(".dropdown-menu").stop(true, true).fadeIn("fast");
+            },
+            function () {
+                $(this).find(".dropdown-menu").stop(true, true).fadeOut("fast");
+            }
+        );
+    });
+</script>
 <script src="/js/bootstrap.min.js"></script>
 
 <div class="container mx-auto">
@@ -27,8 +25,7 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto text-center">
                 <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle mr-2" id="groupesDropdown" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a href="" class="nav-link dropdown-toggle mr-2" id="groupesDropdown" role="button">
                         <i class="fas fa-users"></i> Groupes
                     </a>
                     <div class="dropdown-menu bg-dark" aria-labelledby="groupesDropdown">
@@ -36,8 +33,7 @@
                     </div>
                 </li>
                 <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle mr-2" id="personnesDropdown" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a href="" class="nav-link dropdown-toggle mr-2" id="personnesDropdown" role="button">
                         <i class="fas fa-user"></i> Personnes
                     </a>
                     <div class="dropdown-menu bg-dark" aria-labelledby="personnesDropdown">
@@ -48,8 +44,7 @@
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" id="compteDropdown" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a href="" class="nav-link dropdown-toggle" id="compteDropdown" role="button">
                         <i class="fas fa-user-circle"></i> Mon Compte
                     </a>
                     <div class="dropdown-menu bg-dark" aria-labelledby="compteDropdown">

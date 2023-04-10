@@ -6,7 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import mybootapp.model.*;
 import mybootapp.model.objects.Groupe;
 import mybootapp.model.objects.Personne;
-import mybootapp.model.validators.PersonneInscriptionValidator;
+import mybootapp.model.validators.personne.InscriptionValidator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,7 +38,7 @@ public class PersonneValidatorTest {
     private IDirectoryDAO directoryDAO;
 
     @InjectMocks
-    private PersonneInscriptionValidator personneValidator;
+    private InscriptionValidator personneValidator;
 
     @BeforeEach
     public void setup() {

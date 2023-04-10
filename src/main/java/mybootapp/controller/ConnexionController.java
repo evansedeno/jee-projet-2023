@@ -1,11 +1,9 @@
 package mybootapp.controller;
 
 import mybootapp.model.IDirectoryDAO;
-import mybootapp.model.objects.Groupe;
 import mybootapp.model.objects.Personne;
 import mybootapp.model.objects.Utilisateur;
-import mybootapp.model.validators.PersonneConnexionValidator;
-import mybootapp.model.validators.PersonneInscriptionValidator;
+import mybootapp.model.validators.personne.ConnexionValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,8 +13,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
-
 @RequestMapping("/connexion")
 @Controller
 public class ConnexionController {
@@ -25,7 +21,7 @@ public class ConnexionController {
     private IDirectoryDAO directoryDAO;
 
     @Autowired
-    PersonneConnexionValidator personneConnexionValidator;
+    ConnexionValidator personneConnexionValidator;
 
     @Autowired
     Utilisateur utilisateur;
@@ -41,7 +37,7 @@ public class ConnexionController {
     }
 
     @PostMapping("")
-    public String connexion(@ModelAttribute("personne") Personne personne, BindingResult result) {
+    public String connexion(@ModelAttribute("personne") Personne personne, Model model, BindingResult result) {
         if (utilisateur.getPersonne() != null) {
             return "redirect:/";
         }
@@ -51,7 +47,10 @@ public class ConnexionController {
         } else {
             Personne utilisateurValide = directoryDAO.authentifier(personne.getEmail(), personne.getMotDePasse());
             utilisateur.setPersonne(utilisateurValide);
+            model.addAttribute("connexionReussie", true);
             return "redirect:/";
         }
     }
+
+
 }

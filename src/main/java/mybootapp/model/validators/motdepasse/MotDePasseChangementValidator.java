@@ -1,6 +1,7 @@
-package mybootapp.model.validators;
+package mybootapp.model.validators.motdepasse;
 
 import mybootapp.model.IDirectoryDAO;
+import mybootapp.model.objects.ChangementMotDePasse;
 import mybootapp.model.objects.Personne;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,10 +13,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Component
-public class PersonneModificationMotDePasseValidator implements Validator {
-
-    @Autowired
-    private IDirectoryDAO directoryDAO;
+public class MotDePasseChangementValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -24,24 +22,20 @@ public class PersonneModificationMotDePasseValidator implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-        List<String> motsDePasses = (List<String>) target;
-        String motDePasse = motsDePasses.get(0);
-        String nouveauMotDePasse = motsDePasses.get(1);
-        String confirmationMotDePasse = motsDePasses.get(2);
-        int id = Integer.parseInt(motsDePasses.get(3));
-        Personne personne = directoryDAO.rechercherPersonneParId(id);
+        ChangementMotDePasse changementMotDePasse = (ChangementMotDePasse) target;
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "motDePasse", "motDePasse.vide");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ancienMotDePasse", "ancienMotDePasse.vide");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "nouveauMotDePasse", "nouveauMotDePasse.vide");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "confirmationMotDePasse", "confirmationMotDePasse.vide");
-        if (!Objects.equals(personne.getMotDePasse(), motDePasse)) {
-            errors.rejectValue("motDePasse", "motDePasse.correspondPas");
+        if (!Objects.equals(changementMotDePasse.getPersonne().getMotDePasse(), changementMotDePasse.getAncienMotDePasse())) {
+            errors.rejectValue("ancienMotDePasse", "ancienMotDePasse.correspondPas");
         }
-        if (!Objects.equals(nouveauMotDePasse, confirmationMotDePasse)) {
+        if (!Objects.equals(changementMotDePasse.getNouveauMotDePasse(), changementMotDePasse.getConfirmationMotDePasse())) {
             errors.rejectValue("confirmationMotDePasse", "confirmationMotDePasse.correspondPas");
         }
-        if (nouveauMotDePasse.length() < 8) {
+        if (changementMotDePasse.getNouveauMotDePasse().length() < 8) {
             errors.rejectValue("nouveauMotDePasse", "nouveauMotDePasse.tropCourt");
         }
+
     }
 }

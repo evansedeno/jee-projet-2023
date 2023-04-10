@@ -1,6 +1,7 @@
 package mybootapp.model;
 
 import mybootapp.model.objects.Groupe;
+import mybootapp.model.objects.JetonMotDePasse;
 import mybootapp.model.objects.Personne;
 
 import java.util.List;
@@ -45,4 +46,11 @@ public interface IDirectoryDAO {
 
     // Modifications
     public void modifierPersonne(Personne personne);
+
+
+    /* ----------------- JetonMotDePasse ----------------- */
+    List<JetonMotDePasse> rechercherTousLesJetons();
+    void supprimerJeton(JetonMotDePasse jeton);
+    void ajouterJeton(JetonMotDePasse jetonMotDePasse);
+    JetonMotDePasse rechercherJetonParToken(String token);
 }

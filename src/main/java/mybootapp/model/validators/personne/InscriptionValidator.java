@@ -1,4 +1,4 @@
-package mybootapp.model.validators;
+package mybootapp.model.validators.personne;
 
 import mybootapp.model.objects.Groupe;
 import mybootapp.model.IDirectoryDAO;
@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 
 @Component
-public class PersonneModificationValidator implements Validator {
+public class InscriptionValidator implements Validator {
 
     @Autowired
     private IDirectoryDAO directoryDAO;
@@ -90,13 +90,16 @@ public class PersonneModificationValidator implements Validator {
         if (!personne.getEmail().matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
             errors.rejectValue("email", "email.format");
         }
+        if (directoryDAO.rechercherPersonneParEmail(personne.getEmail()) != null) {
+            errors.rejectValue("email", "email.existeDeja");
+        }
 
         // Validation du groupe
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "groupe", "personne.groupe.vide");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "groupe", "groupe.vide");
         if (personne.getGroupe() != null && personne.getGroupe().getId() > 0) {
             Groupe groupe = directoryDAO.rechercherGroupeParId(personne.getGroupe().getId());
             if (groupe == null) {
-                errors.rejectValue("groupe", "personne.groupe.existePas");
+                errors.rejectValue("groupe", "groupe.existePas");
             }
         }
 
@@ -105,7 +108,16 @@ public class PersonneModificationValidator implements Validator {
         LocalDate dateDeNaissance = personne.getDateDeNaissance().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate today = LocalDate.now();
         if (dateDeNaissance.isAfter(today)) {
-            errors.rejectValue("dateDeNaissance", "personne.dateDeNaissance.invalide");
+            errors.rejectValue("dateDeNaissance", "dateDeNaissance.invalide");
         }
+
+        // Validation du mot de passe
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "motDePasse", "motDePasse.vide");
+        if (personne.getMotDePasse().length() < 8) {
+            errors.rejectValue("motDePasse", "motDePasse.tropCourt");
+        }
+
+
+
     }
 }

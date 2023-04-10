@@ -1,6 +1,8 @@
-package mybootapp.model;
+package mybootapp.model.services;
 
+import mybootapp.model.IDirectoryDAO;
 import mybootapp.model.objects.Groupe;
+import mybootapp.model.objects.JetonMotDePasse;
 import mybootapp.model.objects.Personne;
 import org.springframework.stereotype.Repository;
 
@@ -96,13 +98,15 @@ public class EntityManagerDirectoryDAO implements IDirectoryDAO {
                 .getResultList();
     }
 
-    public Personne authentifier(String email, String password) {
+    public Personne authentifier(String email, String motDePasse) {
         Personne personne = null;
         try {
-            personne = entityManager.createQuery("SELECT p FROM Personne p WHERE p.email = :email AND p.motdepasse = :password", Personne.class)
+            personne = entityManager.createQuery("SELECT p FROM Personne p WHERE p.email = :email", Personne.class)
                     .setParameter("email", email)
-                    .setParameter("password", password)
                     .getSingleResult();
+            if (!MotDePasseService.comparerMotDePasse(motDePasse, personne.getMotDePasse())) {
+                personne = null;
+            }
         } catch (NoResultException ignored) {
         }
         return personne;
@@ -124,4 +128,30 @@ public class EntityManagerDirectoryDAO implements IDirectoryDAO {
     }
 
 
+    /* ----------------- JetonMotDePasse ----------------- */
+    public List<JetonMotDePasse> rechercherTousLesJetons() {
+        return entityManager.createQuery("SELECT j FROM JetonMotDePasse j", JetonMotDePasse.class).getResultList();
+    }
+
+    public void supprimerJeton(JetonMotDePasse jeton) {
+        entityManager.remove(jeton);
+    }
+
+    public void ajouterJeton(JetonMotDePasse jeton) {
+        entityManager.persist(jeton);
+    }
+
+    public JetonMotDePasse rechercherJetonParToken(String token) {
+        JetonMotDePasse jeton = null;
+        try {
+            jeton = entityManager.createQuery("SELECT j FROM JetonMotDePasse j WHERE j.token = :token", JetonMotDePasse.class)
+                    .setParameter("token", token).getSingleResult();
+        } catch (NoResultException ignored) {
+        }
+        return jeton;
+    }
+
+    public JetonMotDePasse rechercherJetonParId(long id) {
+        return entityManager.find(JetonMotDePasse.class, id);
+    }
 }

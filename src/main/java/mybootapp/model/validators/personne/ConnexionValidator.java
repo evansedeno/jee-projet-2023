@@ -1,4 +1,4 @@
-package mybootapp.model.validators;
+package mybootapp.model.validators.personne;
 
 import mybootapp.model.IDirectoryDAO;
 import mybootapp.model.objects.Personne;
@@ -9,7 +9,7 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 @Component
-public class PersonneConnexionValidator implements Validator {
+public class ConnexionValidator implements Validator {
 
     @Autowired
     private IDirectoryDAO directoryDAO;

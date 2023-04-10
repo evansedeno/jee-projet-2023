@@ -1,7 +1,7 @@
 package mybootapp.web;
 import mybootapp.model.IDirectoryDAO;
 import mybootapp.model.objects.Personne;
-import mybootapp.model.validators.PersonneConnexionValidator;
+import mybootapp.model.validators.personne.ConnexionValidator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,7 @@ public class PersonneConnexionValidatorTest {
     private IDirectoryDAO directoryDAO;
 
     @InjectMocks
-    private PersonneConnexionValidator personneConnexionValidator;
+    private ConnexionValidator personneConnexionValidator;
 
     @BeforeEach
     public void setUp() {

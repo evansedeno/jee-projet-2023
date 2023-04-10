@@ -4,8 +4,8 @@ import mybootapp.model.IDirectoryDAO;
 import mybootapp.model.objects.Groupe;
 import mybootapp.model.objects.Personne;
 import mybootapp.model.objects.Utilisateur;
-import mybootapp.model.validators.PersonneConnexionValidator;
-import mybootapp.model.validators.PersonneInscriptionValidator;
+import mybootapp.model.services.MotDePasseService;
+import mybootapp.model.validators.personne.InscriptionValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +25,7 @@ public class InscriptionController {
     private IDirectoryDAO directoryDAO;
 
     @Autowired
-    PersonneInscriptionValidator personneInscriptionValidator;
+    InscriptionValidator personneInscriptionValidator;
 
     @Autowired
     Utilisateur utilisateur;
@@ -65,11 +65,14 @@ public class InscriptionController {
         if (result.hasErrors()) {
             return "inscription";
         } else {
+            String p = MotDePasseService.crypterMotDePasse(personne.getMotDePasse());
+            personne.setMotDePasse(p);
             int groupe_id = Integer.parseInt(personne.getGroupe().getNom());
             Groupe groupe = directoryDAO.rechercherGroupeParId(groupe_id);
             personne.setGroupe(groupe);
             directoryDAO.ajouterPersonne(personne);
             utilisateur.setPersonne(personne);
+            model.addAttribute("inscriptionReussie", true);
             return "redirect:/";
         }
     }

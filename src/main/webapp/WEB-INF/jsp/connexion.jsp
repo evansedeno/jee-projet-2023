@@ -5,7 +5,6 @@
 <html lang="fr">
 <head>
     <title>Connexion</title>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <script src="/js/bootstrap.min.js"></script>
@@ -27,21 +26,34 @@
             <div class="form-group">
                 <label for="email" class="text-white">Email :</label>
                 <form:input type="text" path="email" placeholder="Entrez votre email"
-                            class="form-control form-control-sm" required="true"/>
-                <div>
-                    <form:errors path="email" cssClass="error"/>
+                            class="form-control form-control-sm"/>
+                <div class="mt-3 mb-3 text-center">
+                    <form:errors path="email" cssClass="alert alert-danger p-1"/>
                 </div>
             </div>
             <div class="form-group">
                 <label for="motDePasse" class="text-white">Mot de passe :</label>
                 <form:password path="motDePasse" placeholder="Entrez votre mot de passe"
-                               class="form-control form-control-sm" required="true"/>
-                <div>
-                    <form:errors path="motDePasse" cssClass="error"/>
+                               class="form-control form-control-sm" />
+                <div class="mt-3 mb-3 text-center">
+                    <form:errors path="motDePasse" cssClass="alert alert-danger p-1"/>
                 </div>
+            </div>
+            <div class="text-center mt-3">
+                <a href="/motdepasse/reinitialiser" class="text-white">Mot de passe oublié ?</a>
             </div>
             <button type="submit" class="btn btn-primary btn-block mt-3">Connexion</button>
         </form:form>
+        <c:if test="${connexionReussie}">
+            <div class="alert alert-success p-1 mt-3 text-center" role="alert">
+                Connexion réussie ! Vous allez être redirigé vers la page d'accueil.
+            </div>
+            <script>
+                setTimeout(function () {
+                    window.location.href = "/accueil";
+                }, 3000);
+            </script>
+        </c:if>
     </div>
 </div>
 

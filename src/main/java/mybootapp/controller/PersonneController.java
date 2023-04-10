@@ -1,12 +1,11 @@
 package mybootapp.controller;
 
 import mybootapp.model.*;
-import mybootapp.model.objects.Groupe;
-import mybootapp.model.objects.Personne;
-import mybootapp.model.objects.Recherche;
-import mybootapp.model.objects.Utilisateur;
-import mybootapp.model.validators.PersonneModificationMotDePasseValidator;
-import mybootapp.model.validators.PersonneModificationValidator;
+import mybootapp.model.objects.*;
+import mybootapp.model.services.MotDePasseService;
+import mybootapp.model.validators.motdepasse.MotDePasseChangementValidator;
+import mybootapp.model.validators.motdepasse.MotDePasseOublieValidator;
+import mybootapp.model.validators.personne.ModificationValidator;
 import mybootapp.model.validators.RechercheValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,10 +28,10 @@ public class PersonneController {
     Utilisateur utilisateur;
 
     @Autowired
-    PersonneModificationValidator personneModificationValidator;
+    ModificationValidator personneModificationValidator;
 
     @Autowired
-    PersonneModificationMotDePasseValidator personneModificationMotDePasseValidator;
+    MotDePasseChangementValidator motDePasseChangementValidator;
 
     @Autowired
     RechercheValidator rechercheValidator;
@@ -61,7 +60,7 @@ public class PersonneController {
         for (Personne personne : personnes) {
             directoryDAO.ajouterPersonne(personne);
         }
-        return "liste";
+        return "personnes";
     }
 
     @RequestMapping("/liste")
@@ -95,6 +94,7 @@ public class PersonneController {
         model.addAttribute("personne", personne);
         model.addAttribute("groupes", groupes);
         model.addAttribute("utilisateur", utilisateur);
+        model.addAttribute("changementMotDePasse", new ChangementMotDePasse());
         return "modifier-personne";
     }
 
@@ -113,39 +113,39 @@ public class PersonneController {
         if (result.hasErrors()) {
             return "modifier-personne";
         }
+        String p = MotDePasseService.crypterMotDePasse(personne.getMotDePasse());
+        personne.setMotDePasse(p);
         directoryDAO.modifierPersonne(personne);
         utilisateur.setPersonne(personne);
         model.addAttribute("utilisateur", utilisateur);
-        return "redirect:/personne/liste";
+        model.addAttribute("modificationReussie", true);
+        personne = directoryDAO.rechercherPersonneParId(id);
+        model.addAttribute("personne", personne);
+        return "modifier-personne";
     }
 
     @PostMapping("/{id}/modifier/motdepasse")
-    public String modifierMotDePasse(@PathVariable("id") long id,
-                                     @RequestParam("motDePasse") String motDePasse,
-                                     @RequestParam("nouveauMotDePasse") String nouveauMotDePasse,
-                                     @RequestParam("confirmationMotDePasse") String confirmationMotDePasse,
-                                     BindingResult result,
-                                     Model model) {
+    public String motDePasseChangement(@PathVariable("id") long id, @ModelAttribute("changementMotDePasse") ChangementMotDePasse changementMotDePasse, Model model, BindingResult result) {
         if (utilisateur.getPersonne() == null || utilisateur.getPersonne().getId() != id) {
             return "redirect:/";
         }
-        List<String> motsDePasses = new ArrayList<>();
-        motsDePasses.add(motDePasse);
-        motsDePasses.add(nouveauMotDePasse);
-        motsDePasses.add(confirmationMotDePasse);
-        motsDePasses.add(String.valueOf(id));
-        personneModificationMotDePasseValidator.validate(motsDePasses, result);
-        model.addAttribute("utilisateur", utilisateur);
-        if (result.hasErrors()) {
-            return "modifier-personne";
+        changementMotDePasse.setPersonne(utilisateur.getPersonne());
+        motDePasseChangementValidator.validate(changementMotDePasse, result);
+        if (!result.hasErrors()) {
+            String p = MotDePasseService.crypterMotDePasse(changementMotDePasse.getPersonne().getMotDePasse());
+            changementMotDePasse.getPersonne().setMotDePasse(p);
+            utilisateur.setPersonne(changementMotDePasse.getPersonne());
+            model.addAttribute("motDePasseReussie", true);
         }
-        Personne personne = directoryDAO.rechercherPersonneParId(id);
-        directoryDAO.modifierPersonne(personne);
         model.addAttribute("utilisateur", utilisateur);
-        return "redirect:/personne/liste";
+        Personne personne = directoryDAO.rechercherPersonneParId(id);
+        List<Groupe> groupes = directoryDAO.rechercherTousLesGroupes();
+        model.addAttribute("personne", personne);
+        model.addAttribute("groupes", groupes);
+        return "modifier-personne";
     }
 
-    @PostMapping("/{id}/supprimer")
+    @PostMapping("/{id}/modifier/supprimer")
     public String supprimerPersonne(@PathVariable("id") long id) {
         if (utilisateur.getPersonne() == null || utilisateur.getPersonne().getId() != id) {
             return "redirect:/";

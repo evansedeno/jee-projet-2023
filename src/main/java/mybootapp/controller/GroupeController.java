@@ -44,7 +44,7 @@ public class GroupeController {
         for (Groupe groupe : groupes) {
             directoryDAO.ajouterGroupe(groupe);
         }
-        return "/test";
+        return "groupes";
     }
 
     @RequestMapping("/liste")
