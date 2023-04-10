@@ -85,3 +85,16 @@ public class GroupeControllerTest {
     }
 
 }
+
+    @Test
+    public void testAjouter10000Groupes() {
+        when(utilisateur.getPersonne()).thenReturn(new Personne());
+        when(bindingResult.hasErrors()).thenReturn(false);
+        for (int i = 0; i < 10000; i++) {
+            Groupe groupe = new Groupe();
+            groupe.setNom("Groupe " + i);
+            String viewName = groupeController.ajouterGroupe(groupe, bindingResult, model);
+            assertEquals("redirect:liste", viewName);
+            verify(directoryDAO).ajouterGroupe(groupe);
+        }
+    }
