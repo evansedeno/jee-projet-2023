@@ -33,7 +33,6 @@ public class ConnexionController {
         }
         model.addAttribute("personne", new Personne());
         return "connexion";
-
     }
 
     @PostMapping("")

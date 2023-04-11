@@ -4,7 +4,6 @@ import mybootapp.model.*;
 import mybootapp.model.objects.*;
 import mybootapp.model.services.MotDePasseService;
 import mybootapp.model.validators.motdepasse.MotDePasseChangementValidator;
-import mybootapp.model.validators.motdepasse.MotDePasseOublieValidator;
 import mybootapp.model.validators.personne.ModificationValidator;
 import mybootapp.model.validators.RechercheValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +41,7 @@ public class PersonneController {
     }
 
     @RequestMapping("/test")
-    public String test() {
+    public String test(Model model) {
         List<Personne> personnes = new ArrayList<>();
         List<Groupe> groupes = directoryDAO.rechercherTousLesGroupes();
         for (int i = 0; i < 1000; i++) {
@@ -60,6 +59,8 @@ public class PersonneController {
         for (Personne personne : personnes) {
             directoryDAO.ajouterPersonne(personne);
         }
+        personnes = directoryDAO.rechercherToutesLesPersonnes();
+        model.addAttribute("personnes", personnes);
         return "personnes";
     }
 

@@ -3,7 +3,6 @@ package mybootapp.controller;
 import mybootapp.model.*;
 import mybootapp.model.objects.Groupe;
 import mybootapp.model.objects.Personne;
-import mybootapp.model.objects.Recherche;
 import mybootapp.model.objects.Utilisateur;
 import mybootapp.model.validators.GroupeValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +33,7 @@ public class GroupeController {
     }
 
     @RequestMapping("/test")
-    public String test() {
+    public String test(Model model) {
         List<Groupe> groupes = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
             Groupe groupe = new Groupe();
@@ -44,6 +43,8 @@ public class GroupeController {
         for (Groupe groupe : groupes) {
             directoryDAO.ajouterGroupe(groupe);
         }
+        groupes = directoryDAO.rechercherTousLesGroupes();
+        model.addAttribute("groupes", groupes);
         return "groupes";
     }
 

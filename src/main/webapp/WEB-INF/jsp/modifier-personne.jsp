@@ -1,6 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
@@ -134,7 +133,7 @@
             <!-- Formulaire pour changer le mot de passe -->
             <div class="form-container">
                 <h1 class="text-center text-white">Changer le mot de passe</h1>
-                <form:form action="motdepasse" method="post" modelAttribute="changementMotDePasse" class="bg-dark">
+                <form:form action="modifier/motdepasse" method="post" modelAttribute="changementMotDePasse" class="bg-dark">
                     <!-- Mot de passe actuel -->
                     <div class="form-group">
                         <label for="ancienMotDePasse" class="text-white">Mot de passe actuel :</label>
@@ -178,6 +177,7 @@
             </div>
         </div>
     </div>
+
     <div class="row" style="margin-bottom: 5rem;">
         <div class="col-md-8 offset-md-2">
             <!-- Formulaire pour supprimer le compte -->
