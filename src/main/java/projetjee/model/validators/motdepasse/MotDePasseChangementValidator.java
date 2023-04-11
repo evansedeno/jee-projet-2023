@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+import projetjee.model.services.MotDePasseService;
 
 import java.util.Objects;
 
@@ -24,7 +25,7 @@ public class MotDePasseChangementValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ancienMotDePasse", "ancienMotDePasse.vide");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "nouveauMotDePasse", "nouveauMotDePasse.vide");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "confirmationMotDePasse", "confirmationMotDePasse.vide");
-        if (!Objects.equals(changementMotDePasse.getPersonne().getMotDePasse(), changementMotDePasse.getAncienMotDePasse())) {
+        if (!MotDePasseService.comparerMotDePasse(changementMotDePasse.getAncienMotDePasse(), changementMotDePasse.getPersonne().getMotDePasse())) {
             errors.rejectValue("ancienMotDePasse", "ancienMotDePasse.correspondPas");
         }
         if (!Objects.equals(changementMotDePasse.getNouveauMotDePasse(), changementMotDePasse.getConfirmationMotDePasse())) {

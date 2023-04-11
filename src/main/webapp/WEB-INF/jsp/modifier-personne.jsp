@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -11,6 +12,18 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/jquery-3.6.4.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let currentUrl = window.location.href;
+            let form = document.getElementById('form-mdp');
+
+            if (currentUrl.endsWith('/modifier/motdepasse')) {
+                form.action = 'motdepasse';
+            } else {
+                form.action = 'modifier/motdepasse';
+            }
+        });
+    </script>
     <style>
         .form-container {
             padding: 20px;
@@ -133,7 +146,8 @@
             <!-- Formulaire pour changer le mot de passe -->
             <div class="form-container">
                 <h1 class="text-center text-white">Changer le mot de passe</h1>
-                <form:form action="modifier/motdepasse" method="post" modelAttribute="changementMotDePasse"
+                <form:form action="modifier/motdepasse" id="form-mdp" method="post"
+                           modelAttribute="changementMotDePasse"
                            class="bg-dark">
                     <!-- Mot de passe actuel -->
                     <div class="form-group">
@@ -176,6 +190,18 @@
                     <div class="alert alert-success p-1 mt-3 text-center" role="alert">
                         Votre mot de passe a été changé avec succès.
                     </div>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            let motDePasseReussie = <c:out value="${motDePasseReussie}" default="false" />;
+
+                            if (motDePasseReussie) {
+                                setTimeout(function () {
+                                    let currentPath = window.location.pathname;
+                                    window.location.href = currentPath.substring(0, currentPath.lastIndexOf('/'));
+                                }, 3000);
+                            }
+                        });
+                    </script>
                 </c:if>
             </div>
         </div>

@@ -125,6 +125,11 @@ public class PersonneController {
         return "modifier-personne";
     }
 
+    @GetMapping("/{id}/modifier/motdepasse")
+    public String redirigerModifier(@PathVariable("id") long id) {
+            return "redirect:/personne/" + id + "/modifier";
+    }
+
     @PostMapping("/{id}/modifier/motdepasse")
     public String motDePasseChangement(@PathVariable("id") long id, @ModelAttribute("changementMotDePasse") ChangementMotDePasse changementMotDePasse, Model model, BindingResult result) {
         if (utilisateur.getPersonne() == null || utilisateur.getPersonne().getId() != id) {
@@ -133,8 +138,9 @@ public class PersonneController {
         changementMotDePasse.setPersonne(utilisateur.getPersonne());
         motDePasseChangementValidator.validate(changementMotDePasse, result);
         if (!result.hasErrors()) {
-            String p = MotDePasseService.crypterMotDePasse(changementMotDePasse.getPersonne().getMotDePasse());
+            String p = MotDePasseService.crypterMotDePasse(changementMotDePasse.getNouveauMotDePasse());
             changementMotDePasse.getPersonne().setMotDePasse(p);
+            directoryDAO.modifierPersonne(changementMotDePasse.getPersonne());
             utilisateur.setPersonne(changementMotDePasse.getPersonne());
             model.addAttribute("motDePasseReussie", true);
         }
