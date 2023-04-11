@@ -37,11 +37,13 @@
                     </tr>
                     <tr>
                         <th>Site web</th>
-                        <td><a href="${personne.siteWeb}" class="site-hover text-decoration-none text-white">${personne.siteWeb}</a></td>
+                        <td><a href="${personne.siteWeb}"
+                               class="site-hover text-decoration-none text-white">${personne.siteWeb}</a></td>
                     </tr>
                     <tr>
                         <th>Groupe</th>
-                        <td><a href="/groupe/${personne.groupe.id}" class="text-decoration-none text-white">${personne.groupe.nom}</a></td>
+                        <td><a href="/groupe/${personne.groupe.id}"
+                               class="text-decoration-none text-white">${personne.groupe.nom}</a></td>
                     </tr>
                     <c:if test="${not empty utilisateur.personne}">
                         <tr>
@@ -50,7 +52,8 @@
                         </tr>
                         <tr>
                             <th>E-mail</th>
-                            <td><a href="mailto:${personne.email}" class="text-decoration-none text-white">${personne.email}</a></td>
+                            <td><a href="mailto:${personne.email}"
+                                   class="text-decoration-none text-white">${personne.email}</a></td>
                         </tr>
                     </c:if>
                     </tbody>

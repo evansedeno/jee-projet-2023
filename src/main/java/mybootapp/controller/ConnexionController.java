@@ -18,12 +18,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ConnexionController {
 
     @Autowired
-    private IDirectoryDAO directoryDAO;
+    public
+    IDirectoryDAO directoryDAO;
 
     @Autowired
+    public
     ConnexionValidator personneConnexionValidator;
 
     @Autowired
+    public
     Utilisateur utilisateur;
 
     @GetMapping("")
@@ -32,7 +35,7 @@ public class ConnexionController {
             return "redirect:/";
         }
         model.addAttribute("personne", new Personne());
-        return "connexion";
+        return "connexion-personne";
     }
 
     @PostMapping("")
@@ -42,7 +45,7 @@ public class ConnexionController {
         }
         personneConnexionValidator.validate(personne, result);
         if (result.hasErrors()) {
-            return "connexion";
+            return "connexion-personne";
         } else {
             Personne utilisateurValide = directoryDAO.authentifier(personne.getEmail(), personne.getMotDePasse());
             utilisateur.setPersonne(utilisateurValide);
@@ -50,6 +53,4 @@ public class ConnexionController {
             return "redirect:/";
         }
     }
-
-
 }

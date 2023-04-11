@@ -1,6 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -31,7 +30,7 @@
                     <div class="form-group">
                         <label for="nouveauMotDePasse" class="text-white">Nouveau mot de passe :</label>
                         <input type="password" name="nouveauMotDePasse" placeholder="Entrez votre nouveau mot de passe"
-                               class="form-control form-control-sm" required="true"/>
+                               class="form-control form-control-sm" required/>
                     </div>
                     <div class="mt-3 mb-3 text-center">
                         <form:errors path="nouveauMotDePasse" cssClass="alert alert-danger p-1"/>
@@ -42,7 +41,7 @@
                             :</label>
                         <input type="password" name="confirmationMotDePasse"
                                placeholder="Confirmez votre nouveau mot de passe" class="form-control form-control-sm"
-                               required="true"/>
+                               required/>
                     </div>
                     <div class="mt-3 mb-3 text-center">
                         <form:errors path="confirmationMotDePasse" cssClass="alert alert-danger p-1"/>

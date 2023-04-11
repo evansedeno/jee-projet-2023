@@ -22,7 +22,7 @@ import java.util.List;
 public class InscriptionController {
 
     @Autowired
-    private IDirectoryDAO directoryDAO;
+    IDirectoryDAO directoryDAO;
 
     @Autowired
     InscriptionValidator personneInscriptionValidator;
@@ -45,7 +45,7 @@ public class InscriptionController {
         model.addAttribute("groupes", groupes);
         model.addAttribute("personne", new Personne());
         model.addAttribute("utilisateur", utilisateur);
-        return "inscription";
+        return "inscription-personne";
     }
 
     @PostMapping("")
@@ -63,7 +63,7 @@ public class InscriptionController {
         model.addAttribute("groupes", groupes);
         personneInscriptionValidator.validate(personne, result);
         if (result.hasErrors()) {
-            return "inscription";
+            return "inscription-personne";
         } else {
             String p = MotDePasseService.crypterMotDePasse(personne.getMotDePasse());
             personne.setMotDePasse(p);

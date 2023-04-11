@@ -2,7 +2,6 @@ package mybootapp.model.objects;
 
 import lombok.Data;
 import mybootapp.model.IDirectoryDAO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -59,5 +58,4 @@ public class Recherche {
 
         return personnes;
     }
-
 }

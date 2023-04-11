@@ -26,8 +26,4 @@ public class MainController {
         utilisateur.setPersonne(null);
         return "redirect:/";
     }
-
-    public void setUtilisateur(Utilisateur utilisateurMock) {
-        this.utilisateur = utilisateurMock;
-    }
 }

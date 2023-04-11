@@ -1,18 +1,16 @@
-package mybootapp.web;
+package mybootapp.model.validators;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
+import mybootapp.Starter;
 import mybootapp.model.*;
 import mybootapp.model.objects.Groupe;
 import mybootapp.model.objects.Personne;
-import mybootapp.model.validators.PersonneInscriptionValidator;
-import org.junit.jupiter.api.Assertions;
+import mybootapp.model.validators.personne.InscriptionValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
+
 import static org.mockito.Mockito.when;
 import static org.mockito.ArgumentMatchers.anyInt;
 
@@ -25,13 +23,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
-import org.springframework.validation.FieldError;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 @SpringBootTest
 @ContextConfiguration(classes = Starter.class)
@@ -43,14 +38,15 @@ public class PersonneValidatorTest {
     private IDirectoryDAO directoryDAO;
 
     @InjectMocks
-    private PersonneInscriptionValidator personneValidator;
+    private InscriptionValidator personneValidator;
 
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
+
     @Test
-    public void testSupports(){
+    public void testSupports() {
         assertTrue(personneValidator.supports(Personne.class));
     }
 
@@ -74,8 +70,8 @@ public class PersonneValidatorTest {
     }
 
     @Test
-    public void testValideDateNomTropCourt(){
-        Personne personne =new Personne();
+    public void testValideDateNomTropCourt() {
+        Personne personne = new Personne();
         personne.setNom("a");
         personne.setPrenom("Jean-philipe");
         personne.setEmail("jean.ph@gmail.com");
@@ -94,8 +90,8 @@ public class PersonneValidatorTest {
     }
 
     @Test
-    public void testValideDateNomTropLong(){
-        Personne personne =new Personne();
+    public void testValideDateNomTropLong() {
+        Personne personne = new Personne();
         personne.setNom("DupondDupondDupondDupondDupondDupondDupondDupondDupondDupondDupondDupondDupondDupondDupondDupond");
         personne.setPrenom("Léo-Paul");
         personne.setEmail("jpavcemalp.dupond@gmail.com");
@@ -114,8 +110,8 @@ public class PersonneValidatorTest {
     }
 
     @Test
-    public void testValideDateNomVide(){
-        Personne personne =new Personne();
+    public void testValideDateNomVide() {
+        Personne personne = new Personne();
         personne.setNom("");
         personne.setPrenom("Léo-Paul");
         personne.setEmail("jpavcemalp.dupond@gmail.com");
@@ -134,8 +130,8 @@ public class PersonneValidatorTest {
     }
 
     @Test
-    public void testValideNomEspace(){
-        Personne personne =new Personne();
+    public void testValideNomEspace() {
+        Personne personne = new Personne();
         personne.setNom("Hyper vite");
         personne.setPrenom("Jean-Philippe");
         personne.setEmail("hypr.jp@gmail.com");
@@ -153,8 +149,8 @@ public class PersonneValidatorTest {
     }
 
     @Test
-    public void testValideNomChiffre(){
-        Personne personne =new Personne();
+    public void testValideNomChiffre() {
+        Personne personne = new Personne();
         personne.setNom("Puppetdu13");
         personne.setPrenom("Gaetan");
         personne.setEmail("p.g@gmail.com");
@@ -172,8 +168,8 @@ public class PersonneValidatorTest {
     }
 
     @Test
-    public void testValideNomSpecial(){
-        Personne personne =new Personne();
+    public void testValideNomSpecial() {
+        Personne personne = new Personne();
         personne.setNom("$*Puppet*$");
         personne.setPrenom("Gaetan");
         personne.setEmail("p.g@gmail.com");
@@ -191,7 +187,7 @@ public class PersonneValidatorTest {
     }
 
     @Test
-    public void testValidationPrenomTropCourt(){
+    public void testValidationPrenomTropCourt() {
         Personne personne = new Personne();
         personne.setNom("Fenuzon");
         personne.setPrenom("A");
@@ -199,7 +195,7 @@ public class PersonneValidatorTest {
         personne.setEmail("a.l@gmail.com");
         personne.setMotDePasse("password");
         personne.setDateDeNaissance(new Date());
-        personne.setGroupe(new Groupe( "Groupe A"));
+        personne.setGroupe(new Groupe("Groupe A"));
         Errors errors = new BeanPropertyBindingResult(personne, "personne");
         personneValidator.validate(personne, errors);
         assertTrue(errors.hasErrors());
@@ -208,7 +204,7 @@ public class PersonneValidatorTest {
     }
 
     @Test
-    public void testValidationPrenomTropLong(){
+    public void testValidationPrenomTropLong() {
         Personne personne = new Personne();
         personne.setNom("Fenuzon");
         personne.setPrenom("Jean-philipe-antoine-valentin-Charles-Edouard-Marc-Antoine-Léo-Paul");
@@ -216,7 +212,7 @@ public class PersonneValidatorTest {
         personne.setEmail("a.l@gmail.com");
         personne.setMotDePasse("password");
         personne.setDateDeNaissance(new Date());
-        personne.setGroupe(new Groupe( "Groupe A"));
+        personne.setGroupe(new Groupe("Groupe A"));
         Errors errors = new BeanPropertyBindingResult(personne, "personne");
         personneValidator.validate(personne, errors);
         assertTrue(errors.hasErrors());
@@ -225,7 +221,7 @@ public class PersonneValidatorTest {
     }
 
     @Test
-    public void testValidationPrenomEspace(){
+    public void testValidationPrenomEspace() {
         Personne personne = new Personne();
         personne.setNom("Fenuzon");
         personne.setPrenom("Jean philipe");
@@ -233,7 +229,7 @@ public class PersonneValidatorTest {
         personne.setEmail("jp@gmail.com");
         personne.setMotDePasse("password");
         personne.setDateDeNaissance(new Date());
-        personne.setGroupe(new Groupe( "Groupe A"));
+        personne.setGroupe(new Groupe("Groupe A"));
         Errors errors = new BeanPropertyBindingResult(personne, "personne");
         personneValidator.validate(personne, errors);
         assertTrue(errors.hasErrors());
@@ -242,7 +238,7 @@ public class PersonneValidatorTest {
     }
 
     @Test
-    public void testValidationPrenomChiffre(){
+    public void testValidationPrenomChiffre() {
         Personne personne = new Personne();
         personne.setNom("Fenuzon");
         personne.setPrenom("Jeanphilipedu13");
@@ -250,7 +246,7 @@ public class PersonneValidatorTest {
         personne.setEmail("jp@gmail.com");
         personne.setMotDePasse("password");
         personne.setDateDeNaissance(new Date());
-        personne.setGroupe(new Groupe( "Groupe A"));
+        personne.setGroupe(new Groupe("Groupe A"));
         Errors errors = new BeanPropertyBindingResult(personne, "personne");
         personneValidator.validate(personne, errors);
         assertTrue(errors.hasErrors());
@@ -259,7 +255,7 @@ public class PersonneValidatorTest {
     }
 
     @Test
-    public void testValidationPrenomSpecial(){
+    public void testValidationPrenomSpecial() {
         Personne personne = new Personne();
         personne.setNom("Fenuzon");
         personne.setPrenom("*Jeanphilipe*");
@@ -267,7 +263,7 @@ public class PersonneValidatorTest {
         personne.setEmail("jp@gmail.com");
         personne.setMotDePasse("password");
         personne.setDateDeNaissance(new Date());
-        personne.setGroupe(new Groupe( "Groupe A"));
+        personne.setGroupe(new Groupe("Groupe A"));
         Errors errors = new BeanPropertyBindingResult(personne, "personne");
         personneValidator.validate(personne, errors);
         assertTrue(errors.hasErrors());
@@ -389,7 +385,8 @@ public class PersonneValidatorTest {
 
     @Test
     public void testEmailTropLong() {
-        Personne personne = new Personne();   personne.setNom("Dupont");
+        Personne personne = new Personne();
+        personne.setNom("Dupont");
         personne.setPrenom("Alice");
         personne.setSiteWeb("feizofh");
         personne.setEmail("avefzukfgzuyfegeyfgzeufgefyuzagefiuezfgy@dfybgefgozeofygzeyofu.com");

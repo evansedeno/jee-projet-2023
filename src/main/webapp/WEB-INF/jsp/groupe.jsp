@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -35,7 +35,9 @@
                         <tr>
                             <td>${personne.nom}</td>
                             <td>${personne.prenom}</td>
-                            <td style="width: 1%;"><a href="${pageContext.request.contextPath}/personne/${String.valueOf(personne.id)}" class="btn btn-primary">Voir</a></td>
+                            <td style="width: 1%;"><a
+                                    href="${pageContext.request.contextPath}/personne/${String.valueOf(personne.id)}"
+                                    class="btn btn-primary">Voir</a></td>
                         </tr>
                     </c:forEach>
                     </tbody>

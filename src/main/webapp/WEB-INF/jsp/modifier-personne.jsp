@@ -133,11 +133,13 @@
             <!-- Formulaire pour changer le mot de passe -->
             <div class="form-container">
                 <h1 class="text-center text-white">Changer le mot de passe</h1>
-                <form:form action="modifier/motdepasse" method="post" modelAttribute="changementMotDePasse" class="bg-dark">
+                <form:form action="modifier/motdepasse" method="post" modelAttribute="changementMotDePasse"
+                           class="bg-dark">
                     <!-- Mot de passe actuel -->
                     <div class="form-group">
                         <label for="ancienMotDePasse" class="text-white">Mot de passe actuel :</label>
-                        <input type="password" id="ancienMotDePasse" name="ancienMotDePasse" placeholder="Entrez votre mot de passe actuel"
+                        <input type="password" id="ancienMotDePasse" name="ancienMotDePasse"
+                               placeholder="Entrez votre mot de passe actuel"
                                class="form-control form-control-sm"/>
                     </div>
                     <div class="mt-3 mb-3 text-center">
@@ -147,7 +149,8 @@
                     <!-- Nouveau mot de passe -->
                     <div class="form-group">
                         <label for="nouveauMotDePasse" class="text-white">Nouveau mot de passe :</label>
-                        <input type="password" id="nouveauMotDePasse" name="nouveauMotDePasse" placeholder="Entrez votre nouveau mot de passe"
+                        <input type="password" id="nouveauMotDePasse" name="nouveauMotDePasse"
+                               placeholder="Entrez votre nouveau mot de passe"
                                class="form-control form-control-sm"/>
                     </div>
                     <div class="mt-3 mb-3 text-center">

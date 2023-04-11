@@ -25,6 +25,11 @@ public class JetonMotDePasse {
 
     /* ----------------- CONSTRUCTEURS ----------------- */
     public JetonMotDePasse() {
+        this.token = genererToken();
+        this.dateDeCreation = new Date();
+        this.dateDeExpiration = new Date(this.dateDeCreation.getTime() + 1000 * 60 * 60 * 24);
+        this.nouveauMotDePasse = "";
+        this.confirmationMotDePasse = "";
     }
 
     public JetonMotDePasse(Personne personne) {

@@ -1,6 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -105,7 +104,8 @@
 
         <c:if test="${inscriptionReussie}">
             <div class="alert alert-success p-1 mt-3 text-center" role="alert">
-                L'inscription a été effectuée avec succès. Vous êtes maintenant connecté et allez être redirigé vers la page d'accueil.
+                L'inscription a été effectuée avec succès. Vous êtes maintenant connecté et allez être redirigé vers la
+                page d'accueil.
             </div>
             <script>
                 setTimeout(function () {

@@ -19,7 +19,7 @@ import java.util.List;
 public class GroupeController {
 
     @Autowired
-    private IDirectoryDAO directoryDAO;
+    IDirectoryDAO directoryDAO;
 
     @Autowired
     GroupeValidator groupeValidator;

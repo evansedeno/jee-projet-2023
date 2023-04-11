@@ -1,15 +1,12 @@
 package mybootapp.model.validators.motdepasse;
 
-import mybootapp.model.IDirectoryDAO;
 import mybootapp.model.objects.ChangementMotDePasse;
 import mybootapp.model.objects.Personne;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import java.util.List;
 import java.util.Objects;
 
 @Component

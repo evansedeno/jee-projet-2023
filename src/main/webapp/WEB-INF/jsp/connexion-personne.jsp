@@ -34,7 +34,7 @@
             <div class="form-group">
                 <label for="motDePasse" class="text-white">Mot de passe :</label>
                 <form:password path="motDePasse" placeholder="Entrez votre mot de passe"
-                               class="form-control form-control-sm" />
+                               class="form-control form-control-sm"/>
                 <div class="mt-3 mb-3 text-center">
                     <form:errors path="motDePasse" cssClass="alert alert-danger p-1"/>
                 </div>

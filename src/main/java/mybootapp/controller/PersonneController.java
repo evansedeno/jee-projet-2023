@@ -21,7 +21,7 @@ import java.util.List;
 public class PersonneController {
 
     @Autowired
-    private IDirectoryDAO directoryDAO;
+    IDirectoryDAO directoryDAO;
 
     @Autowired
     Utilisateur utilisateur;
@@ -187,5 +187,4 @@ public class PersonneController {
         model.addAttribute("personnes", lp);
         return "rechercher";
     }
-
 }

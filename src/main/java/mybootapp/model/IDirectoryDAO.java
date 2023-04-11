@@ -11,46 +11,49 @@ public interface IDirectoryDAO {
     /* ----------------- Groupe ----------------- */
 
     // Recherches
-    public List<Groupe> rechercherTousLesGroupes();
-    public Groupe rechercherGroupeParId(long id);
-    public List<Groupe> rechercherGroupeParNom(String nom);
+    List<Groupe> rechercherTousLesGroupes();
+
+    Groupe rechercherGroupeParId(long id);
 
     // Ajouts
-    public void ajouterGroupe(Groupe groupe);
-
-    // Suppressions
-    public void supprimerGroupe(Groupe groupe);
-
-    // Modifications
-    public void modifierGroupe(Groupe groupe);
+    void ajouterGroupe(Groupe groupe);
 
 
     /* ----------------- Personne ----------------- */
 
     // Recherches
-    public List<Personne> rechercherToutesLesPersonnes();
-    public List<Personne> rechercherPersonnesParGroupe(Groupe groupe);
-    public Personne rechercherPersonneParId(long id);
-    public List<Personne> rechercherPersonnesParNom(String nom);
-    public Personne rechercherPersonneParEmail(String email);
-    public List<Personne> rechercherPersonnesParPrenom(String prenom);
-    public List<Personne> rechercherPersonnesParSiteWeb(String siteWeb);
-    List<Personne> rechercherPersonnesParNomEtPrenom(String nom, String prenom);
+    List<Personne> rechercherToutesLesPersonnes();
+
+    List<Personne> rechercherPersonnesParGroupe(Groupe groupe);
+
+    Personne rechercherPersonneParId(long id);
+
+    List<Personne> rechercherPersonnesParNom(String nom);
+
+    Personne rechercherPersonneParEmail(String email);
+
+    List<Personne> rechercherPersonnesParPrenom(String prenom);
+
+    List<Personne> rechercherPersonnesParSiteWeb(String siteWeb);
+
     Personne authentifier(String email, String password);
 
     // Ajouts
-    public void ajouterPersonne(Personne personne);
+    void ajouterPersonne(Personne personne);
 
     // Suppressions
-    public void supprimerPersonne(Personne personne);
+    void supprimerPersonne(Personne personne);
 
     // Modifications
-    public void modifierPersonne(Personne personne);
+    void modifierPersonne(Personne personne);
 
 
     /* ----------------- JetonMotDePasse ----------------- */
     List<JetonMotDePasse> rechercherTousLesJetons();
+
     void supprimerJeton(JetonMotDePasse jeton);
+
     void ajouterJeton(JetonMotDePasse jetonMotDePasse);
+
     JetonMotDePasse rechercherJetonParToken(String token);
 }

@@ -12,11 +12,4 @@ public class ChangementMotDePasse {
     /* ----------------- CONSTRUCTEURS ----------------- */
     public ChangementMotDePasse() {
     }
-
-    public ChangementMotDePasse(String ancienMotDePasse, String nouveauMotDePasse, String confirmationMotDePasse, Personne personne) {
-        this.ancienMotDePasse = ancienMotDePasse;
-        this.nouveauMotDePasse = nouveauMotDePasse;
-        this.confirmationMotDePasse = confirmationMotDePasse;
-        this.personne = personne;
-    }
 }

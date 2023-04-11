@@ -13,6 +13,8 @@ public class Groupe {
     private long id;
     private String nom;
 
+
+    /* ----------------- CONSTRUCTEURS ----------------- */
     public Groupe() {
     }
 

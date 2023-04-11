@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class MotDePasseController {
 
     @Autowired
-    private IDirectoryDAO directoryDAO;
+    IDirectoryDAO directoryDAO;
 
     @Autowired
     MotDePasseOublieValidator motDePasseOublieValidator;
@@ -65,7 +65,7 @@ public class MotDePasseController {
             return "redirect:/";
         }
         JetonMotDePasse jetonMotDePasse = directoryDAO.rechercherJetonParToken(token);
-        if (jetonMotDePasse == null) {
+        if (jetonMotDePasse == null || !jetonMotDePasse.estValide()) {
             return "redirect:/";
         }
         model.addAttribute("jetonMotDePasse", jetonMotDePasse);
@@ -95,6 +95,4 @@ public class MotDePasseController {
         }
         return "jeton-motdepasse";
     }
-
-
 }
