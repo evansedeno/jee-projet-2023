@@ -23,7 +23,6 @@ public class RechercheValidator implements Validator {
     public void validate(Object target, Errors errors) {
         Recherche recherche = (Recherche) target;
 
-        // Validation du nom
         if (!recherche.getNom().isEmpty()) {
             if (recherche.getNom().matches(".*\\d.*")) {
                 errors.rejectValue("nom", "recherche.nom.chiffre", "Le nom ne doit pas contenir de chiffres.");
@@ -33,7 +32,6 @@ public class RechercheValidator implements Validator {
             }
         }
 
-        // Validation du prénom
         if (!recherche.getPrenom().isEmpty()) {
             if (recherche.getPrenom().matches(".*\\d.*")) {
                 errors.rejectValue("prenom", "recherche.prenom.chiffre", "Le prénom ne doit pas contenir de chiffres.");
@@ -43,14 +41,12 @@ public class RechercheValidator implements Validator {
             }
         }
 
-        // Validation du site web
         if (!recherche.getSiteWeb().isEmpty()) {
             if (!recherche.getSiteWeb().matches("^(http|https)://.*")) {
                 errors.rejectValue("siteWeb", "recherche.siteWeb.format", "Le site web doit commencer par http:// ou https://.");
             }
         }
 
-        // Validation du groupe
         if (!recherche.getGroupe().isEmpty()) {
             long id = Long.parseLong(recherche.getGroupe());
             Groupe groupe = directoryDAO.rechercherGroupeParId(id);

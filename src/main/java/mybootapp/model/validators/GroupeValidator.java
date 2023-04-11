@@ -18,7 +18,6 @@ public class GroupeValidator implements Validator {
     public void validate(Object target, Errors errors) {
         Groupe groupe = (Groupe) target;
 
-        // Validation du nom
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "nom", "groupe.nom.vide", "Le nom est obligatoire.");
         if (groupe.getNom().length() < 2) {
             errors.rejectValue("nom", "groupe.nom.tropCourt", "Le nom est trop court.");

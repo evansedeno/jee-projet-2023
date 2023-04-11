@@ -27,7 +27,6 @@ public class ModificationValidator implements Validator {
     public void validate(Object target, Errors errors) {
         Personne personne = (Personne) target;
 
-        // Validation du nom
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "nom", "nom.vide");
         if (personne.getNom().length() < 2) {
             errors.rejectValue("nom", "nom.tropCourt");
@@ -45,7 +44,6 @@ public class ModificationValidator implements Validator {
             errors.rejectValue("nom", "nom.caractereSpecial");
         }
 
-        // Validation du prénom
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "prenom", "prenom.vide");
         if (personne.getPrenom().length() < 2) {
             errors.rejectValue("prenom", "prenom.tropCourt");
@@ -63,7 +61,6 @@ public class ModificationValidator implements Validator {
             errors.rejectValue("prenom", "prenom.caractereSpecial");
         }
 
-        // Validation du site web
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "siteWeb", "siteWeb.vide");
 
         if (personne.getSiteWeb().length() < 5) {
@@ -79,7 +76,6 @@ public class ModificationValidator implements Validator {
             errors.rejectValue("siteWeb", "siteWeb.format");
         }
 
-        // Validation de l'email
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "email.vide");
         if (personne.getEmail().length() < 2) {
             errors.rejectValue("email", "email.tropCourt");
@@ -91,7 +87,6 @@ public class ModificationValidator implements Validator {
             errors.rejectValue("email", "email.format");
         }
 
-        // Validation du groupe
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "groupe", "personne.groupe.vide");
         if (personne.getGroupe() != null && personne.getGroupe().getId() > 0) {
             Groupe groupe = directoryDAO.rechercherGroupeParId(personne.getGroupe().getId());
@@ -100,7 +95,6 @@ public class ModificationValidator implements Validator {
             }
         }
 
-        // Validation de la date de naissance
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "dateDeNaissance", "dateDeNaissance.vide");
         LocalDate dateDeNaissance = personne.getDateDeNaissance().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate today = LocalDate.now();
