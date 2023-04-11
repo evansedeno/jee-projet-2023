@@ -88,7 +88,7 @@ public class PersonneControllerTest {
     }
 
     @Test
-    public void testAfficherPersonne_WithValidId() {
+    public void testAfficherPersonne_ValidId() {
         long id = 1;
         Personne personne = personnes.get(0);
         when(directoryDAO.rechercherPersonneParId(id)).thenReturn(personne);
@@ -99,8 +99,7 @@ public class PersonneControllerTest {
     }
 
     @Test
-    public void testAfficherPersonne_WithInvalidId() {
-        // Création d'un identifiant invalide
+    public void testAfficherPersonne_InvalidId() {
         long id = 0;
         when(directoryDAO.rechercherPersonneParId(id)).thenReturn(null);
         String viewName = personneController.afficherPersonne(id, model);
@@ -108,12 +107,5 @@ public class PersonneControllerTest {
         verify(directoryDAO).rechercherPersonneParId(id);
     }
 
-    //TODO testModifierPersonne
-
-    //TODO testModifierMotDePasse
-
-    //TODO testSupprimerPersonne
-
-    //TODO testRechercherPersonne
 
 }
