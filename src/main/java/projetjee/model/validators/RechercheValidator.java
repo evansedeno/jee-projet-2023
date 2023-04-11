@@ -27,7 +27,7 @@ public class RechercheValidator implements Validator {
             if (recherche.getNom().matches(".*\\d.*")) {
                 errors.rejectValue("nom", "recherche.nom.chiffre", "Le nom ne doit pas contenir de chiffres.");
             }
-            if (!recherche.getNom().matches("^[a-zA-Z]+$")) {
+            if (!recherche.getNom().matches(".*[^\\w\\s-_].*")) {
                 errors.rejectValue("nom", "recherche.nom.caractereSpecial", "Le nom ne doit pas contenir de caractères spéciaux.");
             }
         }
@@ -36,7 +36,7 @@ public class RechercheValidator implements Validator {
             if (recherche.getPrenom().matches(".*\\d.*")) {
                 errors.rejectValue("prenom", "recherche.prenom.chiffre", "Le prénom ne doit pas contenir de chiffres.");
             }
-            if (!recherche.getPrenom().matches("^[a-zA-Z]+$")) {
+            if (!recherche.getPrenom().matches(".*[^\\w\\s-_].*")) {
                 errors.rejectValue("prenom", "recherche.prenom.caractereSpecial", "Le prénom ne doit pas contenir de caractères spéciaux.");
             }
         }

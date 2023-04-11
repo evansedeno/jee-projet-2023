@@ -2,11 +2,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>jeeWebApp</groupId>
-    <artifactId>jeeWebApp</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>jeeWebApp</name>
-    <description>Demo project for Spring Boot Web Application</description>
+    <groupId>annuaire</groupId>
+    <artifactId>annuaire</artifactId>
+    <version>1</version>
+    <name>annuaire</name>
+    <description>Projet JEE réalisé par Evan SEDENO et Guillaume RISCH</description>
     <packaging>war</packaging>
 
     <properties>

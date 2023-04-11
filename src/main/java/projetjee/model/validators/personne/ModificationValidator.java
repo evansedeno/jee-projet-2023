@@ -34,13 +34,10 @@ public class ModificationValidator implements Validator {
         if (personne.getNom().length() > 50) {
             errors.rejectValue("nom", "nom.tropLong");
         }
-        if (personne.getNom().contains(" ")) {
-            errors.rejectValue("nom", "nom.espace");
-        }
         if (personne.getNom().matches(".*\\d.*")) {
             errors.rejectValue("nom", "nom.chiffre");
         }
-        if (personne.getNom().matches(".*\\W.*")) {
+        if (personne.getNom().matches(".*[^\\w\\s-_].*")) {
             errors.rejectValue("nom", "nom.caractereSpecial");
         }
 
@@ -51,13 +48,10 @@ public class ModificationValidator implements Validator {
         if (personne.getPrenom().length() > 50) {
             errors.rejectValue("prenom", "prenom.tropLong");
         }
-        if (personne.getPrenom().contains(" ")) {
-            errors.rejectValue("prenom", "prenom.espace");
-        }
         if (personne.getPrenom().matches(".*\\d.*")) {
             errors.rejectValue("prenom", "prenom.chiffre");
         }
-        if (personne.getPrenom().matches(".*\\W.*")) {
+        if (personne.getPrenom().matches(".*[^\\w\\s-_].*")) {
             errors.rejectValue("prenom", "prenom.caractereSpecial");
         }
 
