@@ -1,12 +1,14 @@
 package mybootapp.web;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 import mybootapp.model.*;
 import mybootapp.model.objects.Groupe;
 import mybootapp.model.objects.Personne;
-import mybootapp.model.validators.personne.InscriptionValidator;
+import mybootapp.model.validators.PersonneInscriptionValidator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,10 +25,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 @SpringBootTest
 @ContextConfiguration(classes = Starter.class)
@@ -38,7 +43,7 @@ public class PersonneValidatorTest {
     private IDirectoryDAO directoryDAO;
 
     @InjectMocks
-    private InscriptionValidator personneValidator;
+    private PersonneInscriptionValidator personneValidator;
 
     @BeforeEach
     public void setup() {
@@ -46,7 +51,7 @@ public class PersonneValidatorTest {
     }
     @Test
     public void testSupports(){
-        Assertions.assertTrue(personneValidator.supports(Personne.class));
+        assertTrue(personneValidator.supports(Personne.class));
     }
 
     @Test
@@ -64,8 +69,8 @@ public class PersonneValidatorTest {
         when(directoryDAO.rechercherGroupeParId(anyInt())).thenReturn(null);
         Errors errors = new BeanPropertyBindingResult(personne, "personne");
         personneValidator.validate(personne, errors);
-        Assertions.assertEquals(1, errors.getErrorCount());
-        Assertions.assertEquals("personne.groupe.existePas", errors.getFieldError("groupe").getCode());
+        assertEquals(1, errors.getErrorCount());
+        assertEquals("groupe.existePas", errors.getFieldError("groupe").getCode());
     }
 
     @Test
@@ -83,8 +88,8 @@ public class PersonneValidatorTest {
         when(directoryDAO.rechercherGroupeParId(1)).thenReturn(groupe);
         Errors errors = new BeanPropertyBindingResult(personne, "personne");
         personneValidator.validate(personne, errors);
-        Assertions.assertTrue(errors.hasErrors());
-        Assertions.assertEquals("nom.tropCourt", errors.getFieldError("nom").getCode());
+        assertTrue(errors.hasErrors());
+        assertEquals("nom.tropCourt", errors.getFieldError("nom").getCode());
 
     }
 
@@ -103,8 +108,8 @@ public class PersonneValidatorTest {
         when(directoryDAO.rechercherGroupeParId(1)).thenReturn(groupe);
         Errors errors = new BeanPropertyBindingResult(personne, "personne");
         personneValidator.validate(personne, errors);
-        Assertions.assertTrue(errors.hasErrors());
-        Assertions.assertEquals("nom.tropLong", errors.getFieldError("nom").getCode());
+        assertTrue(errors.hasErrors());
+        assertEquals("nom.tropLong", errors.getFieldError("nom").getCode());
 
     }
 
@@ -123,8 +128,8 @@ public class PersonneValidatorTest {
         when(directoryDAO.rechercherGroupeParId(1)).thenReturn(groupe);
         Errors errors = new BeanPropertyBindingResult(personne, "personne");
         personneValidator.validate(personne, errors);
-        Assertions.assertTrue(errors.hasErrors());
-        Assertions.assertEquals("nom.vide", errors.getFieldError("nom").getCode());
+        assertTrue(errors.hasErrors());
+        assertEquals("nom.vide", errors.getFieldError("nom").getCode());
 
     }
 
@@ -143,8 +148,8 @@ public class PersonneValidatorTest {
         when(directoryDAO.rechercherGroupeParId(1)).thenReturn(groupe);
         Errors errors = new BeanPropertyBindingResult(personne, "personne");
         personneValidator.validate(personne, errors);
-        Assertions.assertTrue(errors.hasErrors());
-        Assertions.assertEquals("nom.espace", errors.getFieldError("nom").getCode());
+        assertTrue(errors.hasErrors());
+        assertEquals("nom.espace", errors.getFieldError("nom").getCode());
     }
 
     @Test
@@ -162,8 +167,8 @@ public class PersonneValidatorTest {
         when(directoryDAO.rechercherGroupeParId(1)).thenReturn(groupe);
         Errors errors = new BeanPropertyBindingResult(personne, "personne");
         personneValidator.validate(personne, errors);
-        Assertions.assertTrue(errors.hasErrors());
-        Assertions.assertEquals("nom.chiffre", errors.getFieldError("nom").getCode());
+        assertTrue(errors.hasErrors());
+        assertEquals("nom.chiffre", errors.getFieldError("nom").getCode());
     }
 
     @Test
@@ -181,8 +186,8 @@ public class PersonneValidatorTest {
         when(directoryDAO.rechercherGroupeParId(1)).thenReturn(groupe);
         Errors errors = new BeanPropertyBindingResult(personne, "personne");
         personneValidator.validate(personne, errors);
-        Assertions.assertTrue(errors.hasErrors());
-        Assertions.assertEquals("nom.caractereSpecial", errors.getFieldError("nom").getCode());
+        assertTrue(errors.hasErrors());
+        assertEquals("nom.caractereSpecial", errors.getFieldError("nom").getCode());
     }
 
     @Test
@@ -197,9 +202,9 @@ public class PersonneValidatorTest {
         personne.setGroupe(new Groupe( "Groupe A"));
         Errors errors = new BeanPropertyBindingResult(personne, "personne");
         personneValidator.validate(personne, errors);
-        Assertions.assertTrue(errors.hasErrors());
-        Assertions.assertTrue(errors.hasFieldErrors("prenom"));
-        Assertions.assertEquals("prenom.tropCourt", errors.getFieldError("prenom").getCode());
+        assertTrue(errors.hasErrors());
+        assertTrue(errors.hasFieldErrors("prenom"));
+        assertEquals("prenom.tropCourt", errors.getFieldError("prenom").getCode());
     }
 
     @Test
@@ -214,9 +219,9 @@ public class PersonneValidatorTest {
         personne.setGroupe(new Groupe( "Groupe A"));
         Errors errors = new BeanPropertyBindingResult(personne, "personne");
         personneValidator.validate(personne, errors);
-        Assertions.assertTrue(errors.hasErrors());
-        Assertions.assertTrue(errors.hasFieldErrors("prenom"));
-        Assertions.assertEquals("prenom.tropLong", errors.getFieldError("prenom").getCode());
+        assertTrue(errors.hasErrors());
+        assertTrue(errors.hasFieldErrors("prenom"));
+        assertEquals("prenom.tropLong", errors.getFieldError("prenom").getCode());
     }
 
     @Test
@@ -231,9 +236,9 @@ public class PersonneValidatorTest {
         personne.setGroupe(new Groupe( "Groupe A"));
         Errors errors = new BeanPropertyBindingResult(personne, "personne");
         personneValidator.validate(personne, errors);
-        Assertions.assertTrue(errors.hasErrors());
-        Assertions.assertTrue(errors.hasFieldErrors("prenom"));
-        Assertions.assertEquals("prenom.espace", errors.getFieldError("prenom").getCode());
+        assertTrue(errors.hasErrors());
+        assertTrue(errors.hasFieldErrors("prenom"));
+        assertEquals("prenom.espace", errors.getFieldError("prenom").getCode());
     }
 
     @Test
@@ -248,9 +253,9 @@ public class PersonneValidatorTest {
         personne.setGroupe(new Groupe( "Groupe A"));
         Errors errors = new BeanPropertyBindingResult(personne, "personne");
         personneValidator.validate(personne, errors);
-        Assertions.assertTrue(errors.hasErrors());
-        Assertions.assertTrue(errors.hasFieldErrors("prenom"));
-        Assertions.assertEquals("prenom.chiffre", errors.getFieldError("prenom").getCode());
+        assertTrue(errors.hasErrors());
+        assertTrue(errors.hasFieldErrors("prenom"));
+        assertEquals("prenom.chiffre", errors.getFieldError("prenom").getCode());
     }
 
     @Test
@@ -265,9 +270,9 @@ public class PersonneValidatorTest {
         personne.setGroupe(new Groupe( "Groupe A"));
         Errors errors = new BeanPropertyBindingResult(personne, "personne");
         personneValidator.validate(personne, errors);
-        Assertions.assertTrue(errors.hasErrors());
-        Assertions.assertTrue(errors.hasFieldErrors("prenom"));
-        Assertions.assertEquals("prenom.caractereSpecial", errors.getFieldError("prenom").getCode());
+        assertTrue(errors.hasErrors());
+        assertTrue(errors.hasFieldErrors("prenom"));
+        assertEquals("prenom.caractereSpecial", errors.getFieldError("prenom").getCode());
     }
 
     @Test
@@ -281,9 +286,9 @@ public class PersonneValidatorTest {
         personne.setDateDeNaissance(new Date());
         Errors errors = new BindException(personne, "personne");
         personneValidator.validate(personne, errors);
-        Assertions.assertTrue(errors.hasErrors());
-        Assertions.assertTrue(errors.hasFieldErrors("siteWeb"));
-        Assertions.assertEquals("siteWeb.vide", errors.getFieldError("siteWeb").getCode());
+        assertTrue(errors.hasErrors());
+        assertTrue(errors.hasFieldErrors("siteWeb"));
+        assertEquals("siteWeb.vide", errors.getFieldError("siteWeb").getCode());
     }
 
     @Test
@@ -297,9 +302,9 @@ public class PersonneValidatorTest {
         personne.setDateDeNaissance(new Date());
         Errors errors = new BindException(personne, "personne");
         personneValidator.validate(personne, errors);
-        Assertions.assertTrue(errors.hasErrors());
-        Assertions.assertTrue(errors.hasFieldErrors("siteWeb"));
-        Assertions.assertEquals("siteWeb.tropCourt", errors.getFieldError("siteWeb").getCode());
+        assertTrue(errors.hasErrors());
+        assertTrue(errors.hasFieldErrors("siteWeb"));
+        assertEquals("siteWeb.tropCourt", errors.getFieldError("siteWeb").getCode());
     }
 
     @Test
@@ -313,9 +318,9 @@ public class PersonneValidatorTest {
         personne.setDateDeNaissance(new Date());
         Errors errors = new BindException(personne, "personne");
         personneValidator.validate(personne, errors);
-        Assertions.assertTrue(errors.hasErrors());
-        Assertions.assertTrue(errors.hasFieldErrors("siteWeb"));
-        Assertions.assertEquals("siteWeb.tropLong", errors.getFieldError("siteWeb").getCode());
+        assertTrue(errors.hasErrors());
+        assertTrue(errors.hasFieldErrors("siteWeb"));
+        assertEquals("siteWeb.tropLong", errors.getFieldError("siteWeb").getCode());
     }
 
     @Test
@@ -329,9 +334,9 @@ public class PersonneValidatorTest {
         personne.setDateDeNaissance(new Date());
         Errors errors = new BindException(personne, "personne");
         personneValidator.validate(personne, errors);
-        Assertions.assertTrue(errors.hasErrors());
-        Assertions.assertTrue(errors.hasFieldErrors("siteWeb"));
-        Assertions.assertEquals("siteWeb.espace", errors.getFieldError("siteWeb").getCode());
+        assertTrue(errors.hasErrors());
+        assertTrue(errors.hasFieldErrors("siteWeb"));
+        assertEquals("siteWeb.espace", errors.getFieldError("siteWeb").getCode());
     }
 
     @Test
@@ -345,9 +350,9 @@ public class PersonneValidatorTest {
         personne.setDateDeNaissance(new Date());
         Errors errors = new BindException(personne, "personne");
         personneValidator.validate(personne, errors);
-        Assertions.assertTrue(errors.hasErrors());
-        Assertions.assertTrue(errors.hasFieldErrors("siteWeb"));
-        Assertions.assertEquals("siteWeb.format", errors.getFieldError("siteWeb").getCode());
+        assertTrue(errors.hasErrors());
+        assertTrue(errors.hasFieldErrors("siteWeb"));
+        assertEquals("siteWeb.format", errors.getFieldError("siteWeb").getCode());
     }
 
     @Test
@@ -361,9 +366,9 @@ public class PersonneValidatorTest {
         personne.setDateDeNaissance(new Date());
         Errors errors = new BindException(personne, "personne");
         personneValidator.validate(personne, errors);
-        Assertions.assertTrue(errors.hasErrors());
-        Assertions.assertTrue(errors.hasFieldErrors("email"));
-        Assertions.assertEquals("email.vide", errors.getFieldError("email").getCode());
+        assertTrue(errors.hasErrors());
+        assertTrue(errors.hasFieldErrors("email"));
+        assertEquals("email.vide", errors.getFieldError("email").getCode());
     }
 
     @Test
@@ -377,9 +382,9 @@ public class PersonneValidatorTest {
         personne.setDateDeNaissance(new Date());
         Errors errors = new BindException(personne, "personne");
         personneValidator.validate(personne, errors);
-        Assertions.assertTrue(errors.hasErrors());
-        Assertions.assertTrue(errors.hasFieldErrors("email"));
-        Assertions.assertEquals("email.tropCourt", errors.getFieldError("email").getCode());
+        assertTrue(errors.hasErrors());
+        assertTrue(errors.hasFieldErrors("email"));
+        assertEquals("email.tropCourt", errors.getFieldError("email").getCode());
     }
 
     @Test
@@ -392,9 +397,9 @@ public class PersonneValidatorTest {
         personne.setDateDeNaissance(new Date());
         Errors errors = new BindException(personne, "personne");
         personneValidator.validate(personne, errors);
-        Assertions.assertTrue(errors.hasErrors());
-        Assertions.assertTrue(errors.hasFieldErrors("email"));
-        Assertions.assertEquals("email.tropLong", errors.getFieldError("email").getCode());
+        assertTrue(errors.hasErrors());
+        assertTrue(errors.hasFieldErrors("email"));
+        assertEquals("email.tropLong", errors.getFieldError("email").getCode());
     }
 
 
@@ -409,9 +414,9 @@ public class PersonneValidatorTest {
         personne.setDateDeNaissance(new Date());
         Errors errors = new BindException(personne, "personne");
         personneValidator.validate(personne, errors);
-        Assertions.assertTrue(errors.hasErrors());
-        Assertions.assertTrue(errors.hasFieldErrors("email"));
-        Assertions.assertEquals("email.format", errors.getFieldError("email").getCode());
+        assertTrue(errors.hasErrors());
+        assertTrue(errors.hasFieldErrors("email"));
+        assertEquals("email.format", errors.getFieldError("email").getCode());
     }
 
     @Test
@@ -425,9 +430,9 @@ public class PersonneValidatorTest {
         personne.setDateDeNaissance(new Date());
         Errors errors = new BindException(personne, "personne");
         personneValidator.validate(personne, errors);
-        Assertions.assertTrue(errors.hasErrors());
-        Assertions.assertTrue(errors.hasFieldErrors("groupe"));
-        Assertions.assertEquals("personne.groupe.vide", errors.getFieldError("groupe").getCode());
+        assertTrue(errors.hasErrors());
+        assertTrue(errors.hasFieldErrors("groupe"));
+        assertEquals("groupe.vide", errors.getFieldError("groupe").getCode());
     }
 
     @Test
@@ -444,11 +449,11 @@ public class PersonneValidatorTest {
         personne.setGroupe(groupe);
         Errors errors = new BindException(personne, "personne");
         personneValidator.validate(personne, errors);
-        Assertions.assertTrue(errors.hasErrors());
-        Assertions.assertTrue(errors.hasFieldErrors("groupe"));
-        Assertions.assertEquals("personne.groupe.existePas", errors.getFieldError("groupe").getCode());
+        assertTrue(errors.hasErrors());
+        assertTrue(errors.hasFieldErrors("groupe"));
+        assertEquals("groupe.existePas", errors.getFieldError("groupe").getCode());
     }
-    
+
     @Test
     void testDateDeNaissanceInvalide() {
         Personne personne = new Personne();
@@ -460,8 +465,38 @@ public class PersonneValidatorTest {
         personne.setDateDeNaissance(Date.from(LocalDate.of(2025, 1, 1).atStartOfDay(ZoneId.systemDefault()).toInstant()));
         Errors errors = new BeanPropertyBindingResult(personne, "personne");
         personneValidator.validate(personne, errors);
-        Assertions.assertTrue(errors.hasErrors());
-        Assertions.assertEquals("personne.dateDeNaissance.invalide", errors.getFieldError("dateDeNaissance").getCode());
+        assertTrue(errors.hasErrors());
+        assertEquals("dateDeNaissance.invalide", errors.getFieldError("dateDeNaissance").getCode());
+    }
+
+    @Test
+    void testMotDePasseVide() {
+        Personne personne = new Personne();
+        personne.setNom("Dupont");
+        personne.setPrenom("Alice");
+        personne.setSiteWeb("feizofh");
+        personne.setEmail("befyugyefgu");
+        personne.setMotDePasse("");
+        personne.setDateDeNaissance(Date.from(LocalDate.of(2025, 1, 1).atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        Errors errors = new BeanPropertyBindingResult(personne, "personne");
+        personneValidator.validate(personne, errors);
+        assertTrue(errors.hasErrors());
+        assertEquals("motDePasse.vide", errors.getFieldError("motDePasse").getCode());
+    }
+
+    @Test
+    void testMotDePasseTropCourt() {
+        Personne personne = new Personne();
+        personne.setNom("Dupont");
+        personne.setPrenom("Alice");
+        personne.setSiteWeb("feizofh");
+        personne.setEmail("befyugyefgu");
+        personne.setMotDePasse("a");
+        personne.setDateDeNaissance(Date.from(LocalDate.of(2025, 1, 1).atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        Errors errors = new BeanPropertyBindingResult(personne, "personne");
+        personneValidator.validate(personne, errors);
+        assertTrue(errors.hasErrors());
+        assertEquals("motDePasse.tropCourt", errors.getFieldError("motDePasse").getCode());
     }
 
 }

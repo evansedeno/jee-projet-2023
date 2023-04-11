@@ -85,3 +85,62 @@ public class GroupeControllerTest {
     }
 
 }
+
+    @Test
+    public void testAjouter10000Groupes() {
+        when(utilisateur.getPersonne()).thenReturn(new Personne());
+        when(bindingResult.hasErrors()).thenReturn(false);
+        for (int i = 0; i < 10000; i++) {
+            Groupe groupe = new Groupe();
+            groupe.setNom("Groupe " + i);
+            String viewName = groupeController.ajouterGroupe(groupe, bindingResult, model);
+            assertEquals("redirect:liste", viewName);
+            verify(directoryDAO).ajouterGroupe(groupe);
+        }
+    }
+
+
+    @Test
+    public void testAjouterGroupeAvecNomNull() {
+        Groupe groupe = new Groupe();
+        groupe.setNom(null);
+        when(utilisateur.getPersonne()).thenReturn(new Personne());
+        when(bindingResult.hasErrors()).thenReturn(true);
+        String viewName = groupeController.ajouterGroupe(groupe, bindingResult, model);
+        assertEquals("ajouter-groupe", viewName);
+        verify(directoryDAO, never()).ajouterGroupe(groupe);
+    }
+
+    @Test
+    public void testAjouterGroupeAvecNomVide() {
+        Groupe groupe = new Groupe();
+        groupe.setNom("");
+        when(utilisateur.getPersonne()).thenReturn(new Personne());
+        when(bindingResult.hasErrors()).thenReturn(true);
+        String viewName = groupeController.ajouterGroupe(groupe, bindingResult, model);
+        assertEquals("ajouter-groupe", viewName);
+        verify(directoryDAO, never()).ajouterGroupe(groupe);
+    }
+
+    @Test
+    public void testAjouterGroupeAvecNomTropLong() {
+        Groupe groupe = new Groupe();
+        groupe.setNom("frnzeoifjzreofizmehfnuzpeofhzenufpozhefzneuimoifhzeuifomizehfnuzileofmhzefj");
+        when(utilisateur.getPersonne()).thenReturn(new Personne());
+        when(bindingResult.hasErrors()).thenReturn(true);
+        String viewName = groupeController.ajouterGroupe(groupe, bindingResult, model);
+        assertEquals("ajouter-groupe", viewName);
+        verify(directoryDAO, never()).ajouterGroupe(groupe);
+
+    }
+
+    @Test
+    public void testAjouterGroupeAvecNomTropCourt() {
+        Groupe groupe = new Groupe();
+        groupe.setNom("f");
+        when(utilisateur.getPersonne()).thenReturn(new Personne());
+        when(bindingResult.hasErrors()).thenReturn(true);
+        String viewName = groupeController.ajouterGroupe(groupe, bindingResult, model);
+        assertEquals("ajouter-groupe", viewName);
+        verify(directoryDAO, never()).ajouterGroupe(groupe);
+    }
